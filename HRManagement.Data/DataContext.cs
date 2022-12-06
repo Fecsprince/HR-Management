@@ -17,11 +17,9 @@ namespace HRManagement.Data
         }
 
 
-        //public DbSet<Product> Products { get; set; }
-        //public DbSet<ProductCategory> ProductCategories { get; set; }
-        //public DbSet<Customer> Customers { get; set; }
-        //public DbSet<Order> Orders { get; set; }
-        
+        public DbSet<Designation> Designations { get; set; }
+        public DbSet<Branch> Branches { get; set; } 
+
 
 
     }

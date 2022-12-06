@@ -173,6 +173,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202212060839448_initial.cs" />
+    <Compile Include="Migrations\202212060839448_initial.Designer.cs">
+      <DependentUpon>202212060839448_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -251,6 +256,21 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HRManagement.Data\HRManagement.Data.csproj">
+      <Project>{d5962aa4-09fe-4e02-9118-460f82d3fa37}</Project>
+      <Name>HRManagement.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HRManagement.Services\HRManagement.Services.csproj">
+      <Project>{006ada6d-61d7-4bc0-b4ab-ea98fd0bd67f}</Project>
+      <Name>HRManagement.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202212060839448_initial.resx">
+      <DependentUpon>202212060839448_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

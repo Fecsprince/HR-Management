@@ -50,6 +50,8 @@
   <ItemGroup>
     <Compile Include="DataContext.cs" />
     <Compile Include="Models\BaseEntity.cs" />
+    <Compile Include="Models\Branch.cs" />
+    <Compile Include="Models\Designation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
