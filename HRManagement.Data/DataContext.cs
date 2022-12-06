@@ -19,6 +19,7 @@ namespace HRManagement.Data
 
         public DbSet<Designation> Designations { get; set; }
         public DbSet<Branch> Branches { get; set; } 
+        public DbSet<FeedBack> FeedBacks { get; set; } 
 
 
 
