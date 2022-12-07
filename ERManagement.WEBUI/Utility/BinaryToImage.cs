@@ -1,4 +1,5 @@
 ﻿
+using System.Data.Linq;
 using System.Drawing;
 using System.IO;
 

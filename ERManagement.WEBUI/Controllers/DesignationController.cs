@@ -12,17 +12,15 @@ namespace SylistStore.WebUI.Controllers
 {
     [Authorize(Roles = "SuperAdmin")]
 
-    public class BranchController : Controller
+    public class DesignationController : Controller
     {
-        IRepository<Branch> context;
+        IRepository<Designation> context;
 
-        public BranchController(IRepository<Branch> Branchcontext)
+        public DesignationController(IRepository<Designation> Designationcontext)
         {
-            context = Branchcontext;
+            context = Designationcontext;
 
         }
-
-
 
         #region BRANCH CRUD
 
@@ -31,12 +29,12 @@ namespace SylistStore.WebUI.Controllers
         {
             try
             {
-                var branches = context.Collection();
+                var designations = context.Collection();
 
-                if (branches != null && branches.Count() > 0)
+                if (designations != null && designations.Count() > 0)
                 {
-                    ViewBag.AllBranches = branches;
-                    ViewBag.BranchCount = branches.Count();
+                    ViewBag.AllDesignations = designations;
+                    ViewBag.DesignationsCount = designations.Count();
                 }
             }
             catch (Exception ex)
@@ -54,7 +52,7 @@ namespace SylistStore.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult Index(Branch model)
+        public JsonResult Index(Designation model)
         {
             string msg = "";
 
@@ -66,13 +64,10 @@ namespace SylistStore.WebUI.Controllers
                 {
                     if (dbObj != null)
                     {
-
-
-
                         dbObj.Name = model.Name;
-                        dbObj.Address = model.Address;
-                        var updatedBranch = context.Update(dbObj);
-                        if (updatedBranch != null)
+                        dbObj.Description = model.Description;
+                        var updatedDesigation = context.Update(dbObj);
+                        if (updatedDesigation != null)
                         {
                             msg = model.Name.ToString() + " is updated successfully!";
                         }
@@ -84,15 +79,15 @@ namespace SylistStore.WebUI.Controllers
                     else
                     {
 
-                        var newBranch = context.Insert(model);
+                        var newDesigation = context.Insert(model);
 
-                        if (newBranch != null)
+                        if (newDesigation != null)
                         {
-                            msg = newBranch.Name + " added Successfully!";
+                            msg = newDesigation.Name + " added Successfully!";
                         }
                         else
                         {
-                            msg = newBranch.Name + " was not added successfully!";
+                            msg = newDesigation.Name + " was not added successfully!";
                         }
 
                     }
@@ -115,9 +110,9 @@ namespace SylistStore.WebUI.Controllers
         }
 
 
-        public ActionResult AddEditBranch(string ID)
+        public ActionResult AddEditDesigation(string ID)
         {
-            Branch model = new Branch();
+            Designation model = new Designation();
             try
             {
                 if (ID != null)
@@ -126,7 +121,7 @@ namespace SylistStore.WebUI.Controllers
                     if (obj != null)
                     {
                         model.Name = obj.Name;
-                        model.Address = obj.Address;
+                        model.Description = obj.Description;
                     }
                 }
             }
@@ -135,11 +130,11 @@ namespace SylistStore.WebUI.Controllers
                 Session["grmsg"] = "TRY AGAIN, IF PERSISTED, CONTACT ADMIN!";
                 return RedirectToAction("Index");
             }
-            return PartialView("AddEditBranch", model);
+            return PartialView("AddEditDesigation", model);
         }
 
 
-        public JsonResult DeleteBranch(string ID)
+        public JsonResult DeleteDesignation(string ID)
         {
 
             string msg = "";

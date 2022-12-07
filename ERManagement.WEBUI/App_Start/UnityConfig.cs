@@ -47,6 +47,7 @@ namespace ERManagement.WEBUI
             container.RegisterType<IRepository<Designation>, SQLRepository<Designation>>();
             container.RegisterType<IRepository<Branch>, SQLRepository<Branch>>();
             container.RegisterType<IRepository<FeedBack>, SQLRepository<FeedBack>>();
+            container.RegisterType<IRepository<Employee>, SQLRepository<Employee>>();
         }
     }
 }

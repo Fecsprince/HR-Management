@@ -189,6 +189,8 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\DesignationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -200,6 +202,10 @@
     <Compile Include="Migrations\202212060839448_initial.cs" />
     <Compile Include="Migrations\202212060839448_initial.Designer.cs">
       <DependentUpon>202212060839448_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212070817397_employeeTable.cs" />
+    <Compile Include="Migrations\202212070817397_employeeTable.Designer.cs">
+      <DependentUpon>202212070817397_employeeTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -327,6 +333,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202212060839448_initial.resx">
       <DependentUpon>202212060839448_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212070817397_employeeTable.resx">
+      <DependentUpon>202212070817397_employeeTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
