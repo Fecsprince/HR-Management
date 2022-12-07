@@ -1,6 +1,9 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using HRManagement.Data.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -16,6 +19,25 @@ namespace ERManagement.WEBUI.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        //  - USER EXTRA PROPERTIES
+
+        [ForeignKey("Designation")]
+        public string Desgination_ID { get; set; }
+
+        [ForeignKey("Branch")]
+        public string JobUnit_Branch_ID { get; set; }
+
+        [ForeignKey("Employee")]
+        public string Employee_ID { get; set; }
+
+
+        //REFERENCES
+        public virtual Designation Designation { get; set; } 
+        public virtual Branch Branch { get; set; }
+        public virtual Employee Employee { get; set; }
+
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -24,6 +46,8 @@ namespace ERManagement.WEBUI.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
+
 
         public static ApplicationDbContext Create()
         {
