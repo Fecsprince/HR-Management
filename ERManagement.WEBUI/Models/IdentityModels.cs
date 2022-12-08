@@ -20,24 +20,7 @@ namespace ERManagement.WEBUI.Models
             return userIdentity;
         }
 
-        //  - USER EXTRA PROPERTIES
-
-        [ForeignKey("Designation")]
-        public string Desgination_ID { get; set; }
-
-        [ForeignKey("Branch")]
-        public string JobUnit_Branch_ID { get; set; }
-
-        [ForeignKey("Employee")]
-        public string Employee_ID { get; set; }
-
-
-        //REFERENCES
-        public virtual Designation Designation { get; set; } 
-        public virtual Branch Branch { get; set; }
-        public virtual Employee Employee { get; set; }
-
-
+       
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

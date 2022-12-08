@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.97.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.97.0\lib\netstandard2.0\ClosedXML.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -195,6 +198,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\BranchController.cs" />
+    <Compile Include="Controllers\Tast.cs" />
     <Compile Include="Controllers\UtilityController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -206,6 +210,10 @@
     <Compile Include="Migrations\202212070817397_employeeTable.cs" />
     <Compile Include="Migrations\202212070817397_employeeTable.Designer.cs">
       <DependentUpon>202212070817397_employeeTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212071326128_employeeTable2.cs" />
+    <Compile Include="Migrations\202212071326128_employeeTable2.Designer.cs">
+      <DependentUpon>202212071326128_employeeTable2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -306,6 +314,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\EmployeeDocument\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -336,6 +345,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202212070817397_employeeTable.resx">
       <DependentUpon>202212070817397_employeeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212071326128_employeeTable2.resx">
+      <DependentUpon>202212071326128_employeeTable2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

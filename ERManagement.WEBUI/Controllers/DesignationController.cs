@@ -2,10 +2,8 @@
 using HRManagement.Data.Models;
 using HRManagement.Services.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SylistStore.WebUI.Controllers
@@ -79,7 +77,7 @@ namespace SylistStore.WebUI.Controllers
                     else
                     {
 
-                        var newDesigation = context.Insert(model);
+                        var newDesigation =  context.Insert(model);
 
                         if (newDesigation != null)
                         {

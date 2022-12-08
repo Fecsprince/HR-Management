@@ -13,3 +13,7 @@ C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Services\obj\Debug\H
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Services\obj\Debug\HRManagement.Services.csproj.CopyComplete
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Services\obj\Debug\HRManagement.Services.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Services\obj\Debug\HRManagement.Services.pdb
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Services\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Services\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Services\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Services\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
