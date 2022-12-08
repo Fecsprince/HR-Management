@@ -133,3 +133,4 @@ C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Num
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Buffers.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\ClosedXML.xml
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.Migrations.employeeTable2.resources
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.Migrations.HRDBEmployeeCRUD2.resources
