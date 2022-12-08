@@ -1,5 +1,5 @@
 ﻿
-using ERManagement.WEBUI.Models;
+using HRManagement.WEBUI.Models;
 using HRManagement.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;

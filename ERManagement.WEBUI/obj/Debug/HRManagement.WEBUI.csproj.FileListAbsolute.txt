@@ -1,5 +1,4 @@
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.AssemblyReference.cache
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.Migrations.initial.resources
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.GenerateResource.cache
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.CoreCompileInputs.cache
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.dll
@@ -126,11 +125,12 @@ C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Microsoft.
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.CopyComplete
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.Migrations.employeeTable.resources
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\ClosedXML.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Memory.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Numerics.Vectors.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Buffers.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\ClosedXML.xml
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.Migrations.employeeTable2.resources
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.Migrations.HRDBEmployeeCRUD2.resources
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.Migrations.initial.resources
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.Migrations.employeeTable.resources
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.Migrations.employeeTable2.resources
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.Migrations.HRDBEmployeeCRUD2.resources

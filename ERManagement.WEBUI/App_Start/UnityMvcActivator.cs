@@ -3,10 +3,10 @@ using System.Web.Mvc;
 
 using Unity.AspNet.Mvc;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(ERManagement.WEBUI.UnityMvcActivator), nameof(ERManagement.WEBUI.UnityMvcActivator.Start))]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(ERManagement.WEBUI.UnityMvcActivator), nameof(ERManagement.WEBUI.UnityMvcActivator.Shutdown))]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(HRManagement.WEBUI.UnityMvcActivator), nameof(HRManagement.WEBUI.UnityMvcActivator.Start))]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(HRManagement.WEBUI.UnityMvcActivator), nameof(HRManagement.WEBUI.UnityMvcActivator.Shutdown))]
 
-namespace ERManagement.WEBUI
+namespace HRManagement.WEBUI
 {
     /// <summary>
     /// Provides the bootstrapping for integrating Unity with ASP.NET MVC.

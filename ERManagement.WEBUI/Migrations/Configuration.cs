@@ -1,18 +1,18 @@
-namespace ERManagement.WEBUI.Migrations
+namespace HRManagement.WEBUI.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ERManagement.WEBUI.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<HRManagement.WEBUI.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(ERManagement.WEBUI.Models.ApplicationDbContext context)
+        protected override void Seed(HRManagement.WEBUI.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

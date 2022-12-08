@@ -1,4 +1,4 @@
-namespace ERManagement.WEBUI.Migrations
+namespace HRManagement.WEBUI.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

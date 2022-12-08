@@ -5,7 +5,7 @@ using System;
 
 using Unity;
 
-namespace ERManagement.WEBUI
+namespace HRManagement.WEBUI
 {
     /// <summary>
     /// Specifies the Unity configuration for the main container.

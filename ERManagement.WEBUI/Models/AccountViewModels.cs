@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ERManagement.WEBUI.Models
+namespace HRManagement.WEBUI.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
