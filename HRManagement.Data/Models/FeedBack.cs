@@ -5,7 +5,6 @@ namespace HRManagement.Data.Models
 {
     public class FeedBack : BaseEntity
     {
-        [Key]
         public string TicketNo { get; set; }
         [Required]
         public string Subject { get; set; }

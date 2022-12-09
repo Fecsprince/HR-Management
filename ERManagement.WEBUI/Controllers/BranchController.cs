@@ -1,5 +1,6 @@
 ﻿
 using HRManagement.Data.Models;
+using HRManagement.Data.Supports;
 using HRManagement.Services.Interfaces;
 using System;
 using System.Linq;
@@ -22,13 +23,13 @@ namespace SylistStore.WebUI.Controllers
 
 
         #region BRANCH CRUD
-
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult Index()
         {
             try
             {
-                var branches = context.Collection();
+                var branches = context.Collection().ToList();
 
                 if (branches != null && branches.Count() > 0)
                 {
@@ -51,7 +52,7 @@ namespace SylistStore.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult Index(Branch model)
+        public JsonResult Index(BranchViewModel model)
         {
             string msg = "";
 
@@ -63,9 +64,6 @@ namespace SylistStore.WebUI.Controllers
                 {
                     if (dbObj != null)
                     {
-
-
-
                         dbObj.Name = model.Name;
                         dbObj.Address = model.Address;
                         var updatedBranch = context.Update(dbObj);
@@ -80,8 +78,12 @@ namespace SylistStore.WebUI.Controllers
                     }
                     else
                     {
-
-                        var newBranch = context.Insert(model);
+                        var branch = new Branch()
+                        {
+                            Name = model.Name,
+                            Address = model.Address
+                        };
+                        var newBranch = context.Insert(branch);
 
                         if (newBranch != null)
                         {
@@ -114,25 +116,31 @@ namespace SylistStore.WebUI.Controllers
 
         public ActionResult AddEditBranch(string ID)
         {
-            Branch model = new Branch();
+
             try
             {
-                if (ID != null)
+
+                if (ID != "")
                 {
                     var obj = context.Find(ID);
                     if (obj != null)
                     {
-                        model.Name = obj.Name;
-                        model.Address = obj.Address;
+                        var model = new BranchViewModel() { Id = obj.Id, Name = obj.Name, Address = obj.Address };
+                        return PartialView("AddEditBranch", model);
                     }
+                    return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                }
+                else
+                {
+                    var model = new BranchViewModel();
+                    return PartialView("AddEditBranch", model);
                 }
             }
             catch (Exception ex)
             {
                 Session["grmsg"] = "TRY AGAIN, IF PERSISTED, CONTACT ADMIN!";
-                return RedirectToAction("Index");
             }
-            return PartialView("AddEditBranch", model);
+            return RedirectToAction("Index");
         }
 
 

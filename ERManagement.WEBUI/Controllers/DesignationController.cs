@@ -1,5 +1,6 @@
 ﻿
 using HRManagement.Data.Models;
+using HRManagement.Data.Supports;
 using HRManagement.Services.Interfaces;
 using System;
 using System.IO;
@@ -21,13 +22,13 @@ namespace SylistStore.WebUI.Controllers
         }
 
         #region BRANCH CRUD
-
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult Index()
         {
             try
             {
-                var designations = context.Collection();
+                var designations = context.Collection().ToList();
 
                 if (designations != null && designations.Count() > 0)
                 {
@@ -50,7 +51,7 @@ namespace SylistStore.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult Index(Designation model)
+        public JsonResult Index(DesignationViewModel model)
         {
             string msg = "";
 
@@ -76,8 +77,12 @@ namespace SylistStore.WebUI.Controllers
                     }
                     else
                     {
-
-                        var newDesigation =  context.Insert(model);
+                        var designation = new Designation()
+                        {
+                            Name = model.Name,
+                            Description = model.Description
+                        };
+                        var newDesigation = context.Insert(designation);
 
                         if (newDesigation != null)
                         {
@@ -108,27 +113,31 @@ namespace SylistStore.WebUI.Controllers
         }
 
 
-        public ActionResult AddEditDesigation(string ID)
+        public ActionResult AddEditDesignation(string ID)
         {
-            Designation model = new Designation();
             try
             {
-                if (ID != null)
+                if (ID != "")
                 {
                     var obj = context.Find(ID);
                     if (obj != null)
                     {
-                        model.Name = obj.Name;
-                        model.Description = obj.Description;
+                        var model = new DesignationViewModel() { Id = obj.Id, Name = obj.Name, Description = obj.Description };
+                        return PartialView("AddEditDesignation", model);
                     }
+                    return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                }
+                else
+                {
+                    var model = new DesignationViewModel();
+                    return PartialView("AddEditDesignation", model);
                 }
             }
             catch (Exception ex)
             {
                 Session["grmsg"] = "TRY AGAIN, IF PERSISTED, CONTACT ADMIN!";
-                return RedirectToAction("Index");
             }
-            return PartialView("AddEditDesigation", model);
+            return RedirectToAction("Index");
         }
 
 

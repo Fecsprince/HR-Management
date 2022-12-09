@@ -14,3 +14,5 @@ C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\Micro
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.Migrations.initial.resources
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.csproj.GenerateResource.cache

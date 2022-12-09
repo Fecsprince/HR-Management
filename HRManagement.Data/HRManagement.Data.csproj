@@ -56,17 +56,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
+    <Compile Include="Migrations\202212090719512_initial.cs" />
+    <Compile Include="Migrations\202212090719512_initial.Designer.cs">
+      <DependentUpon>202212090719512_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\FeedBack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Supports\DesignationViewModel.cs" />
+    <Compile Include="Supports\BranchViewModel.cs" />
     <Compile Include="Supports\FeedBackVM.cs" />
     <Compile Include="Supports\MailHelper.cs" />
     <Compile Include="Supports\UploadResponse.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202212090719512_initial.resx">
+      <DependentUpon>202212090719512_initial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

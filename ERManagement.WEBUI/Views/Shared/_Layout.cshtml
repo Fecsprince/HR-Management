@@ -46,6 +46,11 @@
             text-decoration: none;
             color: red;
         }
+
+        #menu-right-links {
+            display: flex;
+            list-style: none;
+        }
     </style>
 
 </head>
@@ -67,7 +72,14 @@
                 }
                 else
                 {
-                    <a class="nav-link" href="@Url.Action("Login","Account")"><i class="fa fa-user-circle-o pe-2 text-primary"></i> Log In</a>
+                    <ul id="menu-right-links">
+                        <li class="nav-item me-4">
+                            <a class="nav-link" href="@Url.Action("Register","Account")"><i class="fa fa-user-circle-o pe-2 text-warning"></i> Signup</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Login","Account")"><i class="fa fa-user-circle-o pe-2 text-primary"></i> Login</a>
+                        </li>
+                    </ul>
                 }
             </div>
             <div class="offcanvas offcanvas-end text-bg-dark" style="border-left:4px solid whitesmoke;" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
@@ -143,12 +155,21 @@
                                     <li><a class="dropdown-item" href="@Url.Action("Index","Home")">Employess</a></li>
                                     <li><a class="dropdown-item" href="@Url.Action("Index","Home")">Upload Employee</a></li>
 
-
-
                                 </ul>
                             </li>
-                        }
 
+                        }
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle p-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-superpowers text-warning"></i> Utilities
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li class="dropdown-header fw-bolder text-primary">Others</li>
+                                <li><a class="dropdown-item" href="@Url.Action("Index","Designation")">Designation</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Index","Branch")">Branch</a></li>
+
+                            </ul>
+                        </li>
 
                         <li class="nav-item"><a class="nav-link" href="@Url.Action("About","Home")"><i class="fa fa-sticky-note-o p-2 text-warning"></i>How it Work</a></li>
 
@@ -253,7 +274,7 @@
     <script src="~/vendor/tilt/tilt.jquery.min.js"></script>
     <script src="~/Scripts/main.js"></script>
     <script src="~/Scripts/mainxyz.js"></script>
-  
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
