@@ -29,14 +29,16 @@ namespace HRManagement.Services.Implementations
             context.SaveChanges();
         }
 
-        public void Delete(string Id)
+        public bool Delete(string Id)
         {
             var t = Find(Id);
             if (t != null)
             {
                 Dbset.Remove(t);
                 Commit();
+                return true;
             }
+            return false;
 
         }
 

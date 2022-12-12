@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace ERManagement.WEBUI.Models
+namespace HRManagement.WEBUI.Models
 {
     public class IndexViewModel
     {

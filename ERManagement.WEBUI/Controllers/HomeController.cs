@@ -4,12 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ERManagement.WEBUI.Controllers
+namespace HRManagement.WEBUI.Controllers
 {
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
+            if (TempData["Msg"] != null)
+            {
+                ViewBag.Msg = TempData["Msg"].ToString();
+            }
             return View();
         }
 

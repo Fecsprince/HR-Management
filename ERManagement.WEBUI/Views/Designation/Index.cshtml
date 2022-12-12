@@ -1,0 +1,210 @@
+﻿
+@{
+    ViewBag.Title = "Designations";
+}
+
+
+<div id="bucket">
+
+    @if (ViewBag.Msg != null)
+    {
+        <p id="msg" style="display:none">@ViewBag.Msg</p>
+    }
+
+    <h3 class="lead fs-3" id="title">Designation's table</h3>
+    @if (User.IsInRole("SuperAdmin"))
+    {
+        <input type="button" class="btn btn-outline-primary fw-bold px-3 fw-bolder" onclick="AddEdit('')" value="New Designation" />
+    }
+    <br />
+    <br />
+
+
+
+
+
+
+    @* TABLE BELLOW IS USED TO POPULATE ALL RECORD IN DB *@
+    @if (ViewBag.AllDesignations != null)
+    {
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        @if (User.IsInRole("SuperAdmin"))
+                        {
+                            <th></th>
+                        }
+                    </tr>
+                </thead>
+
+                <tbody class="table-group-divider">
+                    @{ int i = 1;}
+                    @foreach (var item in ViewBag.AllDesignations as List<HRManagement.Data.Models.Designation>)
+                    {
+                        var ItemCount = ViewBag.DesignationsCount;
+                        <tr id="row_@item.Id">
+
+                            <td>
+                                @if (i <= ItemCount)
+                                {
+                                    @i
+                                }
+
+                            </td>
+                            <td>@item.Name</td>
+                            <td>@item.Description</td>
+
+                            @if (User.IsInRole("SuperAdmin"))
+                            {
+                                <td>
+                                    <div class="d-grid gap-2 col-md-12 mx-auto">
+
+                                        <ul id="menu-right-links" class="center-block">
+                                            <li class="nav-item me-4">
+                                                <a href="#" class="text-danger" onclick="ConfirmDeleteRecord('@item.Id')"><span class="fa fa-2x fa-trash-o"></span> </a>
+                                            </li>
+                                            <li class="nav-item me-4">
+                                                <a href="#" class="text-success" onclick="AddEdit('@item.Id')"><span class="fa fa-2x fa-pencil-square-o"></span> </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            }
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+    }
+
+
+
+    @* MODAL BELLOW IS USED  FOR NEW/EDIT RECORD *@
+    <div class="modal fade" id="AddEditModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" id="modalBody">
+
+                </div>
+                <div class="modal-footer">
+
+                    <div class="row">
+                        <div class="col">
+
+                            <a href="#" class=" btn btn-outline-dark py-3 mx-md-2" id="btnReset">Reset</a>
+
+                            <a href="#" class="btn btn-outline-danger py-3 mx-md-2" id="btnCancle">Close</a>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="DeleteModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Delete Record</h1>
+                    <button type="button" class="btn-close text-bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+
+
+                <div class="modal-body">
+
+                    <h2 class="text-center text-danger fs-3">ARE YOU SURE YOU WANT TO DELETE RECORD <span id="deleteId"></span>?</h2>
+                    <input type="hidden" id="ID" />
+                    <div class="d-grid gap-2 col-md-12 mx-auto">
+                        <input type="submit" id="btnDelete" onclick="DeleteRecord()" class="btn btn-danger" value="Yes Delete" />
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        var Smsg = $("#msg").text();
+        if (Smsg != "") {
+            alert(Smsg);
+        }
+
+        $("#btnReset").click(function () {
+            $("#Name").val("");
+            $("#Description").val("");
+        })
+
+        $("#btnCancle").click(function () {
+            $("#AddEditModal").modal("hide");
+        })
+
+    })
+
+
+    var AddEdit = function (id) {
+        $("#loaderDiv").show();
+        debugger;
+        var url = "/Designation/AddEditDesignation?ID=" + id; //USED TO SEARCH ENTITY WITH ID
+
+        $("#modalBody").load(url, function () {  // LOAD THE CONTENT FROM THE ACTION /ADDEDITRECORD
+            $("#loaderDiv").hide();
+            $("#AddEditModal").modal("show");
+        })
+    }
+
+
+
+    var ConfirmDeleteRecord = function (id) {
+        $("#ID").val(id);
+        $("#DeleteModal").modal("show");
+    }
+
+
+    var DeleteRecord = function () {
+
+        var Id = $("#ID").val();
+
+        $.ajax({
+
+            type: "POST",
+            url: "/Designation/DeleteDesignation",
+            data: { ID: Id },
+            success: function (result) {
+                if (result == true) {
+                    $("#row_" + Id).remove();
+                    alert("Record deleted successfully!");
+                    window.location.href = "/Designation/Index";
+                }
+                else {
+                    window.location.href = "/Designation/Index";
+                }
+            }
+        })
+
+
+    }
+
+</script>
+

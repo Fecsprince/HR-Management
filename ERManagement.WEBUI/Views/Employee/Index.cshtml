@@ -1,0 +1,301 @@
+﻿
+
+@{
+    ViewBag.Title = "Employees";
+}
+
+
+@if (ViewBag.Msg != null)
+{
+    <p id="msg" style="display:none">@ViewBag.Msg</p>
+}
+<div class="row">
+    <div class="col">
+        <section class="">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <div class="login-wrap">
+                            <div class="img" style="background-image: url(/Images/employee3.jpg);"></div>
+                            <h3 class="text-center mb-4">Employee Records</h3>
+
+                            @using (Html.BeginForm("Index", "Employee", FormMethod.Get))
+                            {
+                                <div class="row">
+                                    @model HRManagement.Data.Supports.SearchBranchDesignationViewModel
+                                    <div class="form-group mb-3">
+                                        <p>Select Branch</p>
+                                        @Html.DropDownListFor(x => x.SCBranch, new SelectList(ViewBag.EmpBranches, "SBranch", "SBranch"), "Filter By - Branch", new { @class = "form-control" })
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <p>Select Designation</p>
+                                        @Html.DropDownListFor(x => x.SCDesignation, new SelectList(ViewBag.EmpDesignations, "SDesignation", "SDesignation"), "Filter By - Designation", new { @class = "form-control" })
+                                    </div>
+
+                                    <div style="text-align: center;" id="loaderDiv1">
+                                        <img src="~/Images/loadingx.gif" width="80" height="80" class="img img-thumbnail" />
+                                    </div>
+
+                                    <div class="d-grid gap-2 col-md-12 mx-auto">
+                                        <input class="btn btn-danger" id="btnSearch" type="submit" value="Search Employees" />
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<div id="bucket" class="m-3">
+
+    <h2 class="mb-2" id="title">Filtered Employee List</h2>
+
+    @*--  USE WHEN EMPLOYEE RECORD WILL ADDED ONE AT A TIME*@
+    @*<a class="btn btn-success" href="@Url.Action("AddEdithEmployee","Employee")">Add New Employee Record</a>*@
+    <input type="button" class="btn btn-outline-primary fw-bold px-3 fw-bolder" onclick="AddEdit('')" value="New Employee" />
+    <br />
+    <br />
+
+    @if (ViewBag.AllEmployees != null)
+    {
+        <div class="table-responsive">
+            @{int i = 1; }
+            @foreach (var emp in ViewBag.AllEmployees as List<HRManagement.Data.Models.Employee>)
+            {
+                var ItemCount = ViewBag.EmployeesCount;
+                <b>
+                    @if (i <= ItemCount)
+                    {
+                        <button type="button" class="btn btn-light mt-2 float-r">
+                            <span class="badge text-bg-primary fw-bolder">Employee @i</span>
+                        </button>
+
+                    }
+                    <br />
+                </b>
+
+                <b class="me-4">
+                    <a href="#" class="text-success" onclick="AddEdit('@emp.Id')"><span class="fa fa-2x fa-pencil-square-o"></span> </a>
+                </b>
+                <b class="me-4">
+                    <a href="#" class="text-danger" onclick="ConfirmDeleteRecord('@emp.Id')"><span class="fa fa-2x fa-trash-o"></span> </a>
+                </b>
+                <br />
+                <br />
+                <b>Profile::</b>
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>DOB</th>
+                            <th>DOE</th>
+                            <th>Designation</th>
+                            <th>Job Unit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> @emp.Name </td>
+                            <td> @emp.Email </td>
+                            <td> @emp.DOB </td>
+                            <td> @emp.DOE </td>
+                            <td> @emp.Designation.Name </td>
+                            <td> @emp.Branch.Name </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <b>Account Details::</b>
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Basic Salary</th>
+                            <th>Housing Allowance</th>
+                            <th>Transport Allowance</th>
+                            <th>Utility Allowance</th>
+                            <th>Pension</th>
+                            <th>Tax</th>
+                            <th>Gross Salary</th>
+                            <th>Net Salary</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> @emp.BasicSalary.ToString("C", ViewBag.CurrencyFmt) </td>
+                            <td> @emp.HousingAllowance.ToString("C", ViewBag.CurrencyFmt) </td>
+                            <td> @emp.TransportAllowance.ToString("C", ViewBag.CurrencyFmt) </td>
+                            <td> @emp.UtilityAllowance.ToString("C", ViewBag.CurrencyFmt) </td>
+                            <td> @emp.Pension.ToString("C", ViewBag.CurrencyFmt) </td>
+                            <td>
+                                <span style="color:red;">
+                                    @{ 
+                                        double tax = (emp.Tax / 100) * Convert.ToDouble(emp.BasicSalary); 
+                                    }
+                                    @tax.ToString("C", ViewBag.CurrencyFmt)
+                                </span>
+                            </td>
+                            <td> @emp.GrossSalary.ToString("C", ViewBag.CurrencyFmt)</td>
+                            <td><span style="color:green; font-weight:bold;"> @emp.NetSalary.ToString("C", ViewBag.CurrencyFmt) </span></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                i++;
+
+            }
+
+        </div>
+
+
+    }
+
+    @* MODAL BELLOW IS USED  FOR NEW/EDIT RECORD *@
+    <div class="modal fade" id="AddEditModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" id="modalBody">
+
+                </div>
+                <div class="modal-footer">
+
+                    <div class="row">
+                        <div class="col">
+
+                            <a href="#" class=" btn btn-outline-dark py-3 mx-md-2" id="btnReset">Reset</a>
+
+                            <a href="#" class="btn btn-outline-danger py-3 mx-md-2" id="btnCancle">Close</a>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="DeleteModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Delete Record</h1>
+                    <button type="button" class="btn-close text-bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+
+
+                <div class="modal-body">
+
+                    <h2 class="text-center text-danger fs-3">ARE YOU SURE YOU WANT TO DELETE RECORD <span id="deleteId"></span>?</h2>
+                    <input type="hidden" id="ID" />
+                    <div class="d-grid gap-2 col-md-12 mx-auto">
+                        <input type="submit" id="btnDelete" onclick="DeleteRecord()" class="btn btn-danger" value="Yes Delete" />
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+@*<script src="~/Scripts/jquery-3.4.1.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var Smsg = $("#msg").text();
+        if (Smsg.trim() != "") {
+            alert(Smsg);
+        }
+
+        $("#loaderDiv1").hide();
+
+        $("#btnSearch").click(function () {
+            $("#loaderDiv1").show();
+        });
+
+
+        $("#btnReset").click(function () {
+            $("#Name").val("");
+            $("#Email").val("");
+            $("#DOB").val("");
+            $("#DOE").val("");
+            $("#Designation_ID").val("");
+            $("#JobUnit_Branch_ID").val("");
+            $("#BasicSalary").val("");
+            $("#HousingAllowance").val("");
+            $("#TransportAllowance").val("");
+            $("#UtilityAllowance").val("");
+            $("#Pension").val("");
+            $("#GrossSalary").val("");
+            $("#NetSalary").val("");
+            $("#Tax").val("");
+        })
+
+        $("#btnCancle").click(function () {
+            $("#AddEditModal").modal("hide");
+        })
+
+    })
+
+    var AddEdit = function (id) {
+        $("#loaderDiv11").show();
+        var url = "/Employee/AddEditEmployee?ID=" + id; //USED TO SEARCH ENTITY WITH ID
+
+        $("#modalBody").load(url, function () {  // LOAD THE CONTENT FROM THE ACTION /ADDEDITRECORD
+            $("#loaderDiv").hide();
+            $("#AddEditModal").modal("show");
+        })
+    }
+
+
+
+    var ConfirmDeleteRecord = function (id) {
+        $("#ID").val(id);
+        $("#DeleteModal").modal("show");
+    }
+
+
+    var DeleteRecord = function () {
+
+        var Id = $("#ID").val();
+
+        $.ajax({
+
+            type: "POST",
+            url: "/Employee/DeleteEmployee",
+            data: { ID: Id },
+            success: function (result) {
+                if (result == true) {
+                    $("#row_" + Id).remove();
+                    alert("Record deleted successfully!");
+                    window.location.href = "/Employee/Index";
+                }
+                else {
+                    window.location.href = "/Employee/Index";
+                }
+            }
+        })
+
+
+    }
+
+</script>

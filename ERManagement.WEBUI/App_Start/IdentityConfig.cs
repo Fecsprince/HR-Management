@@ -10,9 +10,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using ERManagement.WEBUI.Models;
+using HRManagement.WEBUI.Models;
 
-namespace ERManagement.WEBUI
+namespace HRManagement.WEBUI
 {
     public class EmailService : IIdentityMessageService
     {
@@ -53,7 +53,7 @@ namespace ERManagement.WEBUI
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 6,
+                RequiredLength = 10,
                 RequireNonLetterOrDigit = true,
                 RequireDigit = true,
                 RequireLowercase = true,

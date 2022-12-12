@@ -1,0 +1,95 @@
+﻿
+
+@model HRManagement.Data.Supports.DesignationViewModel
+
+
+
+
+
+<div class="row">
+    <div class="col">
+        <section class="ftco-section" style="padding-top:0px; padding-bottom: 2px;">
+            <div class="row justify-content-center">
+                <div class="login-wrap">
+                    <div class="img" style="background-image: url(/Images/company3.jpg);"></div>
+                    <h3 class="text-center mb-4">
+                        @if (Model.Name != null)
+                        {<span>Update Designation</span>}
+                        else
+                        { <span>Add New Designation</span>}
+                    </h3>
+
+                    <form id="frmDescription">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Id)
+
+                        <div class="form-group mb-3">
+                            @Html.TextBoxFor(o => o.Name, new { @class = "form-control", @placeholder = "Enter Designation's Name" })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.TextBoxFor(o => o.Description, new { @class = "form-control", @placeholder = "Enter Designation's Description" })
+                        </div>
+
+
+                        <div style="text-align: center;" id="loaderDiv1" class="pt-2">
+                            <img src="~/Images/loadingx.gif" width="80" height="80" class="img img-thumbnail" />
+                        </div>
+
+                        <div class="d-grid gap-2 col-md-12 mx-auto mt-2">
+                            <a href="#" class="btn btn-primary submit fw-bold px-3 fw-bolder" id="btnSaveUpdate">
+                                @if (Model.Name != null)
+                                {<span>Update Designation</span>}
+                                else
+                                { <span>Save New Designation</span>}
+                            </a>
+                        </div>
+
+
+
+                    </form>
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+</div>
+
+
+
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#loaderDiv1").hide();
+
+        $("#btnSaveUpdate").click(function () {
+
+            $("#loaderDiv1").show();
+
+            var frmData = $("#frmDescription").serialize();
+            var data = frmData;
+            debugger;
+
+            $.ajax({
+                type: "POST",
+                url: "/Designation/Index",
+                data: data,
+                success: function (result) {
+                    $("#loaderDiv").hide();
+                    $("#AddEditModal").modal("hide"); //TO HIDE MODAL AFTER SAVING RECORD
+                    if (result.trim != "" || result.trim != null) { alert(result); }
+                    window.location.href = "/Designation/Index";
+                }
+            })
+        })
+
+    })
+</script>
+
+
+

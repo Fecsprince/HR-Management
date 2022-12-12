@@ -6,9 +6,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using ERManagement.WEBUI.Models;
+using HRManagement.WEBUI.Models;
 
-namespace ERManagement.WEBUI.Controllers
+namespace HRManagement.WEBUI.Controllers
 {
     [Authorize]
     public class ManageController : Controller
@@ -16,15 +16,15 @@ namespace ERManagement.WEBUI.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public ManageController()
-        {
-        }
+        //public ManageController()
+        //{
+        //}
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
+        //public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        //{
+        //    UserManager = userManager;
+        //    SignInManager = signInManager;
+        //}
 
         public ApplicationSignInManager SignInManager
         {

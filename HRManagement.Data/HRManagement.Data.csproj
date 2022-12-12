@@ -37,8 +37,15 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,15 +56,49 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
+    <Compile Include="Migrations\202212101438404_initial.cs" />
+    <Compile Include="Migrations\202212101438404_initial.Designer.cs">
+      <DependentUpon>202212101438404_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212121139051_modelx1.cs" />
+    <Compile Include="Migrations\202212121139051_modelx1.Designer.cs">
+      <DependentUpon>202212121139051_modelx1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212122219526_updatedModel.cs" />
+    <Compile Include="Migrations\202212122219526_updatedModel.Designer.cs">
+      <DependentUpon>202212122219526_updatedModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseEntity.cs" />
+    <Compile Include="Models\Branch.cs" />
+    <Compile Include="Models\Designation.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\FeedBack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Supports\" />
+    <Compile Include="Supports\DesignationViewModel.cs" />
+    <Compile Include="Supports\BranchViewModel.cs" />
+    <Compile Include="Supports\EmployeeViewModel.cs" />
+    <Compile Include="Supports\FeedBackVM.cs" />
+    <Compile Include="Supports\MailHelper.cs" />
+    <Compile Include="Supports\SearchBranchViewModel.cs" />
+    <Compile Include="Supports\SearchBranchDesignationViewModel.cs" />
+    <Compile Include="Supports\GenderViewModel.cs" />
+    <Compile Include="Supports\UploadResponseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202212101438404_initial.resx">
+      <DependentUpon>202212101438404_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212121139051_modelx1.resx">
+      <DependentUpon>202212121139051_modelx1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212122219526_updatedModel.resx">
+      <DependentUpon>202212122219526_updatedModel.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
