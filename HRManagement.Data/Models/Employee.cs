@@ -20,7 +20,6 @@ namespace HRManagement.Data.Models
         [Required(ErrorMessage = "Gender is missing")]
         public string Gender { get; set; }
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DOB { get; set; }
 
         [Required(ErrorMessage = "Designation is missing")]
@@ -31,7 +30,6 @@ namespace HRManagement.Data.Models
         [ForeignKey("Branch")]
         public string JobUnit_Branch_ID { get; set; }
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DOE { get; set; }
 
         [Required(ErrorMessage = "Basic Salary is missing")]

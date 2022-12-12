@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace HRManagement.Data.Supports
 {
-    public class EmployeeViewModel 
+    public class EmployeeViewModel
     {
         [Required(ErrorMessage = "*")]
-        public string Id  { get; set; }
+        public string Id { get; set; }
         public string User_ID { get; set; }
         [Required(ErrorMessage = "Employee email address is not on the database!")]
         [DataType(DataType.EmailAddress)]
@@ -21,7 +21,6 @@ namespace HRManagement.Data.Supports
         [Required(ErrorMessage = "*")]
         public string Gender { get; set; }
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DOB { get; set; }
 
         [Required(ErrorMessage = "*")]
@@ -32,7 +31,6 @@ namespace HRManagement.Data.Supports
         [ForeignKey("Branch")]
         public string JobUnit_Branch_ID { get; set; }
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DOE { get; set; }
 
         [Required(ErrorMessage = "*")]

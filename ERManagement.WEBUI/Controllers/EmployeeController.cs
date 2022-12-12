@@ -396,16 +396,14 @@ namespace SylistStore.WebUI.Controllers
                 if (excelfile == null || excelfile.ContentLength < 0)
                 {
                     msg = "Please select a file, Try again!";
-                    //return View(model);
                     return Json(msg, JsonRequestBehavior.AllowGet);
                 }
                 else if (excelfile != null && excelfile.ContentLength > 0 && excelfile.FileName.EndsWith("xls") || excelfile.FileName.EndsWith("xlsx"))
                 {
                     //UPLOAD NOT EMPTY
                     //CHANGE THE FILE NAME
-                    string fileNewName = DateTime.Now.ToString("ddMMyyyyhhmmss") + Path.GetExtension(excelfile.FileName);
-
-                    string path = Server.MapPath("~/Uploads/EmployeeDocument/" + fileNewName);
+                    
+                    string path = Server.MapPath("~/Uploads/EmployeeDocument/" + excelfile.FileName);
                     if (System.IO.File.Exists(path))
                         System.IO.File.Delete(path);
                     excelfile.SaveAs(path);
@@ -415,75 +413,81 @@ namespace SylistStore.WebUI.Controllers
                     List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
                     List<String> emailList = new List<String>();
 
-                    using (var xLWorkbook = new XLWorkbook(path))
+                    //using (var xLWorkbook = new XLWorkbook(path))
+                    //{
+                    XLWorkbook xLWorkbook = new XLWorkbook(path);
+
+                    int startRow = 3;
+                    while (xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 3).GetString() != "")
                     {
-                        int startRow = 3;
-                        while (xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 1).GetString() != "")
+                        EmployeeViewModel emp = new EmployeeViewModel(); //EMPLOYEE HOLDER
+
+                        UploadResponseViewModel upRes = new UploadResponseViewModel(); // RESPONSE TO ADMIN
+                        string branchName = null;
+                        string designationName = null;
+
+                        emp.Name = xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 3).GetString();
+                        emp.Gender = xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 4).GetString();
+                        emp.DOB = Convert.ToDateTime(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 5).GetString());
+                        designationName = xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 6).GetString();
+                        emp.DOE = Convert.ToDateTime(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 7).GetString());
+                        branchName = xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 8).GetString();
+                        emp.BasicSalary = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 9).GetString());
+                        emp.HousingAllowance = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 10).GetString());
+                        emp.TransportAllowance = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 11).GetString());
+                        emp.UtilityAllowance = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 12).GetString());
+                        emp.Pension = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 13).GetString());
+                        emp.Tax = Convert.ToDouble(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 14).GetString());
+
+                        emp.GrossSalary = emp.BasicSalary +
+                                     emp.HousingAllowance +
+                                     emp.TransportAllowance +
+                                     emp.Pension;
+                        var tax = (emp.Tax / 100) * (double)emp.BasicSalary;
+
+                        emp.NetSalary = emp.GrossSalary - Convert.ToDecimal(tax);
+
+
+                        //  - ITERATE DESIGNATION AND BRANCH AND MATCH
+
+                        //  - BRANCH
+
+                        IEnumerable<Branch> branches = braContext.Collection();
+                        IEnumerable<Designation> designations = desContext.Collection();
+
+                        var branch = branches.Where(x => x.Name.Contains(branchName)).FirstOrDefault();
+
+                        if (branch != null)
+                            emp.JobUnit_Branch_ID = branch.Id;
+                        else
                         {
-                            EmployeeViewModel emp = new EmployeeViewModel(); //EMPLOYEE HOLDER
-
-                            UploadResponseViewModel upRes = new UploadResponseViewModel(); // RESPONSE TO ADMIN
-                            string branchName = null;
-                            string designationName = null;
-
-                            emp.Name = xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 3).GetString();
-                            emp.Gender = xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 4).GetString();
-                            emp.DOB = Convert.ToDateTime(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 5).GetString());
-                            designationName = xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 6).GetString();
-                            emp.DOE = Convert.ToDateTime(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 7).GetString());
-                            branchName = xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 8).GetString();
-                            emp.BasicSalary = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 9).GetString());
-                            emp.HousingAllowance = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 10).GetString());
-                            emp.TransportAllowance = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 11).GetString());
-                            emp.UtilityAllowance = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 12).GetString());
-                            emp.Pension = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 13).GetString());
-                            emp.Tax = Convert.ToDouble(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 14).GetString());
-
-                            emp.GrossSalary = emp.BasicSalary +
-                                         emp.HousingAllowance +
-                                         emp.TransportAllowance +
-                                         emp.Pension;
-
-                            emp.Tax = (emp.Tax / 100) * (double)emp.BasicSalary;
-
-                            emp.NetSalary = emp.GrossSalary - Convert.ToDecimal(emp.Tax);
-
-
-                            //  - ITERATE DESIGNATION AND BRANCH AND MATCH
-
-                            //  - BRANCH
-                            var branch = braContext.Collection().Where(x => x.Name.Contains(branchName)).FirstOrDefault();
-                            if (branch != null)
-                                emp.JobUnit_Branch_ID = branch.Id;
-                            else
-                            {
-                                branch = braContext.Collection().Where(x => x.Name == "TEMPRORAY").FirstOrDefault();
-                                emp.JobUnit_Branch_ID = branch.Id;
-                            }
-
-                            //  - DESIGNATION
-                            var designation = desContext.Collection().Where(x => x.Name.Contains(branchName)).FirstOrDefault();
-                            if (branch != null)
-                                emp.Desgination_ID = designation.Id;
-                            else
-                            {
-                                designation = desContext.Collection().Where(x => x.Name == "TEMPRORAY").FirstOrDefault();
-                                emp.Desgination_ID = designation.Id;
-                            }
-
-                            //  - GENERATE EMAIL, TO BE REMOVED AFTER TESTING
-
-                            var formattedEmail = emp.Name.Trim() + "@gmail.com";
-                            emp.Email = formattedEmail;
-                            emailList.Add(emp.Email);
-                            //  NOW ADD EMP TO LIST OF EMPLOYEES CONTAINER
-
-                            employees.Add(emp);
-
-                            startRow++;
-
+                            branch = branches.Where(x => x.Name == "TEMPORARY").FirstOrDefault();
+                            emp.JobUnit_Branch_ID = branch.Id;
                         }
+
+                        //  - DESIGNATION
+                        var designation = designations.Where(x => x.Name.Contains(designationName)).FirstOrDefault();
+                        if (designation != null)
+                            emp.Desgination_ID = designation.Id;
+                        else
+                        {
+                            designation = designations.Where(x => x.Name == "TEMPORARY").FirstOrDefault();
+                            emp.Desgination_ID = designation.Id;
+                        }
+
+                        //  - GENERATE EMAIL, TO BE REMOVED AFTER TESTING
+
+                        var formattedEmail = emp.Name.Replace(" ","") + "@gmail.com";
+                        emp.Email = formattedEmail;
+                        emailList.Add(emp.Email);
+                        //  NOW ADD EMP TO LIST OF EMPLOYEES CONTAINER
+
+                        employees.Add(emp);
+
+                        startRow++;
+
                     }
+                    //}
 
                     //  -- BELLOW WILL CREATE ROW FOR EACH EMPLOYEE
 
@@ -509,10 +513,10 @@ namespace SylistStore.WebUI.Controllers
                                 Desgination_ID = em.Desgination_ID,
                                 JobUnit_Branch_ID = em.JobUnit_Branch_ID
                             };
-                            string defaultPassword = Membership.GeneratePassword(10, 1);
 
                             //  -- CREATE USER ACCOUNT FIRST
                             //CALL METHOD
+
                             var userAccountResponse = await RegisterUser(emp);
 
                             if (userAccountResponse != null &&
@@ -529,39 +533,7 @@ namespace SylistStore.WebUI.Controllers
                                 uploadResponses.Add(new UploadResponseViewModel()
                                 {
                                     Message = userAccountResponse.Message
-                                });
-
-                            //var user = new ApplicationUser { UserName = em.Email, Email = em.Email };
-                            //var result = await _userManager.CreateAsync(user, defaultPassword);
-
-                            //if (result.Succeeded)
-                            //{
-                            //    //  -- ADD EMPLOYEE TO DB
-                            //    emp.User_ID = user.Id;
-
-                            //    var savEmp = empContext.Insert(emp);
-                            //    if (savEmp != null)
-                            //    {
-                            //        uploadResponses.Add(new UploadResponseViewModel()
-                            //        {
-                            //            Message = emp.Email + " employee record has been created successfully, " +
-                            //                                 "your defualt password is: " + defaultPassword
-                            //        });
-
-                            //    }
-                            //    else
-                            //    {
-                            //        uploadResponses.Add(new UploadResponseViewModel()
-                            //        {
-                            //            Message = emp.Email + " employee record could not created successfully!"
-                            //        });
-                            //    }
-                            //}
-                            //else
-                            //    uploadResponses.Add(new UploadResponseViewModel()
-                            //    {
-                            //        Message = emp.Email + " user account could not created successfully!"
-                            //    });
+                                });                            
                         }
                     }
 
@@ -604,8 +576,7 @@ namespace SylistStore.WebUI.Controllers
         public async Task<UserAccountViewModel> RegisterUser(Employee emp)
         {
             string msg = "";
-            string uId = "";
-            string defaultPassword = Membership.GeneratePassword(10, 1);
+            string defaultPassword = Membership.GeneratePassword(10, 1)+"12";
 
             //  -- CREATE USER ACCOUNT FIRST
             var user = new ApplicationUser { UserName = emp.Email, Email = emp.Email };
@@ -641,7 +612,7 @@ namespace SylistStore.WebUI.Controllers
             return new UserAccountViewModel()
             {
                 Message = msg,
-                UserId = uId
+                UserId = emp.User_ID
             };
         }
 

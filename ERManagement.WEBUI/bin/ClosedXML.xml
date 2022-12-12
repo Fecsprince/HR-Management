@@ -54,278 +54,6 @@
             Base repository for <see cref="T:ClosedXML.Excel.XLWorkbook"/> elements.
             </summary>
         </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.AnyValue">
-            <summary>
-            A discriminated union representing any value that can be passed around in the formula evaluation.
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.AnyValue.Blank">
-            <summary>
-            A value of a blank cell or missing argument. Conversion methods mostly treat blank like 0 or an empty string.
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.AnyValue.TryPickArea(ClosedXML.Excel.XLRangeAddress@,ClosedXML.Excel.CalcEngine.XLError@)">
-            <summary>
-            Try to get a reference that is a one area from the value.
-            </summary>
-            <param name="area">The found area.</param>
-            <param name="error">Original error, if the value is error, <c>#VALUE!</c> if type is not a reference or #REF! if more than one area in the reference.</param>
-            <returns>True if area could be determined, false otherwise.</returns>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.AnyValue.ImplicitIntersection(ClosedXML.Excel.CalcEngine.CalcContext)">
-            <summary>
-            Implicit intersection for arguments of functions that don't accept range as a parameter (Excel 2016).
-            </summary>
-            <returns>Unchanged value for anything other than reference. Reference is changed into a single cell/#VALUE!</returns>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.AnyValue.ReferenceRange(ClosedXML.Excel.CalcEngine.AnyValue@,ClosedXML.Excel.CalcEngine.AnyValue@,ClosedXML.Excel.CalcEngine.CalcContext)">
-            <summary>
-            Create a new reference that has one area that contains both operands or #VALUE! if not possible.
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.AnyValue.ReferenceUnion(ClosedXML.Excel.CalcEngine.AnyValue@,ClosedXML.Excel.CalcEngine.AnyValue@)">
-            <summary>
-            Create a new reference by combining areas of both arguments. Areas of the new reference can overlap = some overlapping
-            cells might be counted multiple times (<c>SUM((A1;A1)) = 2</c> if <c>A1</c> is <c>1</c>).
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.AnyValue.CompareValues(ClosedXML.Excel.CalcEngine.ScalarValue,ClosedXML.Excel.CalcEngine.ScalarValue,System.Globalization.CultureInfo)">
-            <summary>
-            Compare two scalar values using Excel semantic. Rules for comparison are following:
-            <list type="bullet">
-                <item>Logical is always greater than any text (thus transitively greater than any number)</item>
-                <item>Text is always greater than any number, even if empty string</item>
-                <item>Logical are compared by value</item>
-                <item>Numbers are compared by value</item>
-                <item>Text is compared by through case insensitive comparison for workbook culture.</item>
-                <item>
-                    If any argument is error, return error (general rule for all operators).
-                    If all args are errors, pick leftmost error (technically it is left to
-                    implementation, but excel sems to be using left one)
-                </item>
-            </list>
-            </summary>
-            <param name="left">Left hand operand of the comparison.</param>
-            <param name="right">Right hand operand of the comparison.</param>
-            <param name="culture">Culture to use for comparison.</param>
-            <returns>
-                Return -1 (negative)  if left less than right
-                Return 1 (positive) if left greater than left
-                Return 0 if both operands are considered equal.
-            </returns>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.Array">
-            <summary>
-            A base class for an 2D array. Every array is at least 1x1.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.Array.Width">
-            <summary>
-            Width of the array, at least 1.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.Array.Height">
-            <summary>
-            Height of the array, at least 1.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.Array.Item(System.Int32,System.Int32)">
-            <summary>
-            Get a value at specified coordinate.
-            </summary>
-            <param name="y">Uses 0-based notation.</param>
-            <param name="x">Uses 0-based notation.</param>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.Array.GetEnumerator">
-            <summary>
-            An iterator over all elements of an array, from top to bottom, from left to right.
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.Array.Apply(System.Func{ClosedXML.Excel.CalcEngine.ScalarValue,ClosedXML.Excel.CalcEngine.ScalarValue})">
-            <summary>
-            Return a new array that was created by applying a function to each element of the array.
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.Array.Apply(ClosedXML.Excel.CalcEngine.Array,ClosedXML.Excel.CalcEngine.BinaryFunc,ClosedXML.Excel.CalcEngine.CalcContext)">
-            <summary>
-            Return a new array that was created by applying a function to each element of the left and right array.
-            Arrays can have different size and missing values are replaced by <c>#N/A</c>.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.ScalarArray">
-            <summary>
-            An array where all elements have same value.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.ConstArray">
-            <summary>
-            An array of scalar values.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.NumberArray">
-            <summary>
-            A special case of an array that is actually only numbers.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.ReferenceArray">
-            <summary>
-            An array that retrieves its value directly from the worksheet without allocating extra memory.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.AstNode">
-            <summary>
-            Base class for all AST nodes. All AST nodes must be immutable.
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.AstNode.Accept``2(``0,ClosedXML.Excel.CalcEngine.IFormulaVisitor{``0,``1})">
-            <summary>
-            Method to accept a visitor (=call a method of visitor with correct type of the node).
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.ValueNode">
-            <summary>
-            A base class for all AST nodes that can be evaluated to produce a value.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.ScalarNode">
-            <summary>
-            AST node that contains a blank, logical, number, text or an error value.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.UnaryNode">
-            <summary>
-            Unary expression, e.g. +123
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.BinaryNode">
-            <summary>
-            Binary expression, e.g. 1+2
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.FunctionNode">
-            <summary>
-            A function call, e.g. <c>SIN(0.5)</c>.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.FunctionNode.Name">
-            <summary>
-            Name of the function.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.NotSupportedNode">
-            <summary>
-            An placeholder node for AST nodes that are not yet supported in ClosedXML.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.FileNode">
-            <summary>
-            AST node for an reference to an external file in a formula.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.FileNode.Numeric">
-            <summary>
-            If the file is references indirectly, numeric identifier of a file.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.FileNode.Path">
-            <summary>
-            If a file is referenced directly, a path to the file on the disc/UNC/web link, .
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.PrefixNode">
-            <summary>
-            AST node for prefix of a reference in a formula. Prefix is a specification where to look for a reference.
-            <list type="bullet">
-            <item>Prefix specifies a <c>Sheet</c> - used for references in the local workbook.</item>
-            <item>Prefix specifies a <c>FirstSheet</c> and a <c>LastSheet</c> - 3D reference, references uses all sheets between first and last.</item>
-            <item>Prefix specifies a <c>File</c>, no sheet is specified - used for named ranges in external file.</item>
-            <item>Prefix specifies a <c>File</c> and a <c>Sheet</c> - references looks for its address in the sheet of the file.</item>
-            </list>
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.PrefixNode.File">
-            <summary>
-            If prefix references data from another file, can be empty.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.PrefixNode.Sheet">
-            <summary>
-            Name of the sheet, without ! or escaped quotes. Can be empty in some cases (e.g. reference to a named range in an another file).
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.PrefixNode.FirstSheet">
-            <summary>
-            If the prefix is for 3D reference, name of first sheet. Empty otherwise.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.PrefixNode.LastSheet">
-            <summary>
-            If the prefix is for 3D reference, name of the last sheet. Empty otherwise.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.ReferenceNode">
-            <summary>
-            AST node for a reference of an area in some sheet.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.ReferenceNode.Prefix">
-            <summary>
-            An optional prefix for reference item.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.ReferenceNode.Address">
-            <summary>
-            An address of a reference that corresponds to <see cref="P:ClosedXML.Excel.CalcEngine.ReferenceNode.Type"/>. Always without sheet (that is in the prefix).
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.NameNode">
-            <summary>
-            A name node in the formula. Name can refers to a generic formula, in most cases a reference, but it can be any kind of calculation (e.g. <c>A1+7</c>).
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.NameNode.Prefix">
-            <summary>
-            An optional prefix for reference item.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.StructuredReferenceNode.Prefix">
-            <summary>
-            Can be empty if no prefix available.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.CalcContext.Workbook">
-            <summary>
-            Worksheet of the cell the formula is calculating.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.CalcContext.Worksheet">
-            <summary>
-            Worksheet of the cell the formula is calculating.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.CalcContext.FormulaAddress">
-            <summary>
-            Address of the calculated formula.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.CalcContext.Culture">
-            <summary>
-            A culture used for comparisons and conversions (e.g. text to number).
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.CalcContext.UseImplicitIntersection">
-            <summary>
-            Excel 2016 and earlier doesn't support dynamic array formulas (it used an array formulas instead). As a consequence,
-            all arguments for scalar functions where passed through implicit intersection before calling the function.
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.CalcContext.GetNonBlankCells(ClosedXML.Excel.CalcEngine.Reference)">
-            <summary>
-            Get cells with a value for a reference.
-            </summary>
-            <param name="reference">Reference for which to return cells.</param>
-            <returns>A lazy (non-materialized) enumerable of cells with a value for the reference.</returns>
-        </member>
         <member name="T:ClosedXML.Excel.CalcEngine.CalcEngine">
             <summary>
             CalcEngine parses strings and returns Expression objects that can
@@ -333,7 +61,9 @@
             </summary>
             <remarks>
             <para>This class has three extensibility points:</para>
+            <para>Use the <b>DataContext</b> property to add an object's properties to the engine scope.</para>
             <para>Use the <b>RegisterFunction</b> method to define custom functions.</para>
+            <para>Override the <b>GetExternalObject</b> method to add arbitrary variables to the engine scope.</para>
             </remarks>
         </member>
         <member name="M:ClosedXML.Excel.CalcEngine.CalcEngine.Parse(System.String)">
@@ -343,14 +73,11 @@
             <param name="expression">String to parse.</param>
             <returns>An <see cref="T:ClosedXML.Excel.CalcEngine.Expression"/> object that can be evaluated.</returns>
         </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.CalcEngine.Evaluate(System.String,ClosedXML.Excel.XLWorkbook,ClosedXML.Excel.XLWorksheet,ClosedXML.Excel.IXLAddress)">
+        <member name="M:ClosedXML.Excel.CalcEngine.CalcEngine.Evaluate(System.String)">
             <summary>
-            Evaluates an expression.
+            Evaluates a string.
             </summary>
             <param name="expression">Expression to evaluate.</param>
-            <param name="wb">Workbook where is formula being evaluated.</param>
-            <param name="ws">Worksheet where is formula being evaluated.</param>
-            <param name="address">Address of formula.</param>
             <returns>The value of the expression.</returns>
             <remarks>
             If you are going to evaluate the same expression several times,
@@ -365,18 +92,77 @@
             expressions.
             </summary>
         </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.CalcEngine.ToCellContentValue(ClosedXML.Excel.CalcEngine.AnyValue,ClosedXML.Excel.CalcEngine.CalcContext)">
+        <member name="P:ClosedXML.Excel.CalcEngine.CalcEngine.OptimizeExpressions">
             <summary>
-            Convert any kind of formula value to value returned as a content of a cell.
-            <list type="bullet">
-               <item><c>bool</c> - represents a logical value.</item>
-               <item><c>double</c> - represents a number and also date/time as serial date-time.</item>
-               <item><c>string</c> - represents a text value.</item>
-               <item><see cref="T:ClosedXML.Excel.CalcEngine.XLError" /> - represents a formula calculation error.</item>
-            </list>
+            Gets or sets whether the calc engine should optimize expressions when
+            they are parsed.
             </summary>
         </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.LegacyCalcEngineFunction">
+        <member name="P:ClosedXML.Excel.CalcEngine.CalcEngine.IdentifierChars">
+            <summary>
+            Gets or sets a string that specifies special characters that are valid for identifiers.
+            </summary>
+            <remarks>
+            Identifiers must start with a letter or an underscore, which may be followed by
+            additional letters, underscores, or digits. This string allows you to specify
+            additional valid characters such as ':' or '!' (used in Excel range references
+            for example).
+            </remarks>
+        </member>
+        <member name="M:ClosedXML.Excel.CalcEngine.CalcEngine.RegisterFunction(System.String,System.Int32,System.Int32,ClosedXML.Excel.CalcEngine.CalcEngineFunction)">
+            <summary>
+            Registers a function that can be evaluated by this <see cref="T:ClosedXML.Excel.CalcEngine.CalcEngine"/>.
+            </summary>
+            <param name="functionName">Function name.</param>
+            <param name="parmMin">Minimum parameter count.</param>
+            <param name="parmMax">Maximum parameter count.</param>
+            <param name="fn">Delegate that evaluates the function.</param>
+        </member>
+        <member name="M:ClosedXML.Excel.CalcEngine.CalcEngine.RegisterFunction(System.String,System.Int32,ClosedXML.Excel.CalcEngine.CalcEngineFunction)">
+            <summary>
+            Registers a function that can be evaluated by this <see cref="T:ClosedXML.Excel.CalcEngine.CalcEngine"/>.
+            </summary>
+            <param name="functionName">Function name.</param>
+            <param name="parmCount">Parameter count.</param>
+            <param name="fn">Delegate that evaluates the function.</param>
+        </member>
+        <member name="M:ClosedXML.Excel.CalcEngine.CalcEngine.GetExternalObject(System.String)">
+            <summary>
+            Gets an external object based on an identifier.
+            </summary>
+            <remarks>
+            This method is useful when the engine needs to create objects dynamically.
+            For example, a spreadsheet calc engine would use this method to dynamically create cell
+            range objects based on identifiers that cannot be enumerated at design time
+            (such as "AB12", "A1:AB12", etc.)
+            </remarks>
+        </member>
+        <member name="P:ClosedXML.Excel.CalcEngine.CalcEngine.DataContext">
+            <summary>
+            Gets or sets the DataContext for this <see cref="T:ClosedXML.Excel.CalcEngine.CalcEngine"/>.
+            </summary>
+            <remarks>
+            Once a DataContext is set, all public properties of the object become available
+            to the CalcEngine, including sub-properties such as "Address.Street". These may
+            be used with expressions just like any other constant.
+            </remarks>
+        </member>
+        <member name="P:ClosedXML.Excel.CalcEngine.CalcEngine.Functions">
+            <summary>
+            Gets the dictionary that contains function definitions.
+            </summary>
+        </member>
+        <member name="P:ClosedXML.Excel.CalcEngine.CalcEngine.Variables">
+            <summary>
+            Gets the dictionary that contains simple variables (not in the DataContext).
+            </summary>
+        </member>
+        <member name="P:ClosedXML.Excel.CalcEngine.CalcEngine.CultureInfo">
+            <summary>
+            Gets or sets the <see cref="P:ClosedXML.Excel.CalcEngine.CalcEngine.CultureInfo"/> to use when parsing numbers and dates.
+            </summary>
+        </member>
+        <member name="T:ClosedXML.Excel.CalcEngine.CalcEngineFunction">
             <summary>
             Delegate that represents CalcEngine functions.
             </summary>
@@ -392,60 +178,6 @@
             <param name="rangeExpression">Expression referring to the cell range.</param>
             <returns>Total number of cells in the range.</returns>
         </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.DefaultFormulaVisitor`1">
-            <summary>
-            A default visitor that copies a formula.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.XLError">
-            <summary>
-            A formula error.
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.XLError.CellReference">
-            <summary>
-            <c>#REF!</c> - a formula refers to a cell that's not valid.
-            </summary>
-            <example>When unable to find a sheet or a cell.</example>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.XLError.IncompatibleValue">
-            <summary>
-            <c>#VALUE!</c> - Intended to indicate when an incompatible type argument is passed to a function, or an incompatible type operand is used with an operator.
-            </summary>
-            <example>Passing a non-number text to a function that requires a number, trying to get an area from non-contiguous reference. Creating an area from different sheets <c>Sheet1!A1:Sheet2!A2</c></example>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.XLError.DivisionByZero">
-            <summary>
-            <c>#DIV/0!</c> - Intended to indicate when any number (including zero) or any error code is divided by zero.
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.XLError.NameNotRecognized">
-            <summary>
-            <c>#NAME?</c> - Intended to indicate when what looks like a name is used, but no such name has been defined.
-            </summary>
-            <remarks>Only for named ranges, not sheets.</remarks>
-            <example><c>TestRange*10</c> when the named range doesn't exist will result in an error.</example>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.XLError.NoValueAvailable">
-            <summary>
-            <c>#N/A</c> - Intended to indicate when a designated value is not available.
-            </summary>
-            <example>The value is used for extra cells of an array formula that is applied on an array of a smaller size that the array formula.</example>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.XLError.NullValue">
-            <summary>
-            <c>#NULL!</c> - Intended to indicate when two areas are required to intersect, but do not.
-            </summary>
-            <remarks>The space is an intersection operator.</remarks>
-            <example><c>SUM(B1 C1)</c> tries to intersect <c>B1:B1</c> area and <c>C1:C1</c> area, but since there are no intersecting cells, the result is <c>#NULL</c>.</example>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.XLError.NumberInvalid">
-            <summary>
-            <c>#NUM!</c> - Intended to indicate when an argument to a function has a compatible type, but has a value that is outside the domain over which that function is defined.
-            </summary>
-            <remarks>This is known as a domain error.</remarks>
-            <example>ASIN(10) - the ASIN accepts only argument -1..1 (an output of SIN), so the resulting value is <c>#NUM!</c>.</example>
-        </member>
         <member name="T:ClosedXML.Excel.CalcEngine.Exceptions.CellReferenceException">
             <summary>
             This error occurs when you delete a cell referred to in the
@@ -453,6 +185,7 @@
             formula.
             Corresponds to the #REF! error in Excel
             </summary>
+            <seealso cref="T:ClosedXML.Excel.CalcEngine.Exceptions.CalcEngineException" />
         </member>
         <member name="T:ClosedXML.Excel.CalcEngine.Exceptions.CellValueException">
             <summary>
@@ -470,14 +203,6 @@
             Corresponds to the #DIV/0! error in Excel
             </summary>
             <seealso cref="T:System.DivideByZeroException" />
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.Exceptions.MissingContextException">
-            <summary>
-            Evaluation of the formula needs an information that wasn't available. That can happen if the formula
-            is evaluated from methods like <see cref="M:ClosedXML.Excel.XLWorkbook.Evaluate(System.String)"/>. Causes vary, e.g. implicit intersection
-            needs an address of the formula cell. Various methods in ClosedXML are missing different information, e.g.
-            <see cref="M:ClosedXML.Excel.IXLWorksheet.Evaluate(System.String,System.String)"/> has worksheet, but no cell address (=ranges will work, other things won't).
-            </summary>
         </member>
         <member name="T:ClosedXML.Excel.CalcEngine.Exceptions.NameNotRecognizedException">
             <summary>
@@ -517,7 +242,34 @@
         </member>
         <member name="T:ClosedXML.Excel.CalcEngine.Expression">
             <summary>
-            An adapter for legacy function implementations.
+            Base class that represents parsed expressions.
+            </summary>
+            <remarks>
+            For example:
+            <code>
+            Expression expr = scriptEngine.Parse(strExpression);
+            object val = expr.Evaluate();
+            </code>
+            </remarks>
+        </member>
+        <member name="T:ClosedXML.Excel.CalcEngine.UnaryExpression">
+            <summary>
+            Unary expression, e.g. +123
+            </summary>
+        </member>
+        <member name="T:ClosedXML.Excel.CalcEngine.BinaryExpression">
+            <summary>
+            Binary expression, e.g. 1+2
+            </summary>
+        </member>
+        <member name="T:ClosedXML.Excel.CalcEngine.FunctionExpression">
+            <summary>
+            Function call expression, e.g. sin(0.5)
+            </summary>
+        </member>
+        <member name="T:ClosedXML.Excel.CalcEngine.VariableExpression">
+            <summary>
+            Simple variable reference.
             </summary>
         </member>
         <member name="T:ClosedXML.Excel.CalcEngine.XObjectExpression">
@@ -558,125 +310,10 @@
             </summary>
             <param name="message">The message that describes the error.</param>
         </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.Formula">
-            <summary>A non-state representation of a formula that can be used by many cells.</summary>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.Formula.Text">
-            <summary>Text of the formula.</summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.FormulaFlags">
-            <summary>
-            Flags that contain some useful information about a formula (mostly derived from flags in functions).
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.FormulaFlags.None">
-            <summary>
-            Basic formula that takes an input and returns output that is determined solely by the input. No side effects.
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.FormulaFlags.Volatile">
-            <summary>
-            Formula contains a function whose value can be different each time the function is called, even if arguments and workbook are same.
-            </summary>
-            <example><c>TODAY</c>, <c>RAND</c></example>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.FormulaFlags.SideEffect">
-            <summary>
-            Formula that has a side effects beside returning the value.
-            </summary>
-            <example><c>HYPERLINK</c> changes the content of a cell in a workbook.</example>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.FormulaFlags.HasSubtotal">
-            <summary>
-            Formula contains a reference to the <c>SUBTOTAL</c> function.
-            </summary>
-            <remarks>Performance optimization, so a formula with SUBTOTAL doesn't have to check each dependent cell each time it is evaluated.</remarks>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.FormulaParser">
-            <summary>
-            A parser that takes a string and parses it into concrete syntax tree through XLParser and then
-            to abstract syntax tree that is used to evaluate the formula.
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.FormulaParser.DefaultFunctionNameSpace">
-            <summary>
-            A prefix is that is used for functions that are present in a version of Excel, but aren't present in older versions.
-            </summary>
-            <example>
-            If you write <c>CONCAT(A1,B1)</c> in Excel 2021 (not present in Excel 2013), it is saved to the worksheet file as
-            <c>_xlfn.CONCAT(A1,B1)</c>, but the Excel GUI will show only <c>CONCAT(A1,B1)</c>, without the <c>_xlfn</c>.
-            </example>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.FormulaParser.ConvertToAst(Irony.Parsing.ParseTree)">
-            <summary>
-            Parse a tree into a CSt that also has AST.
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.FormulaParser.CreateReferenceNodeFactory">
-            <summary>
-            Reference AST node is significantly different from CST node. It takes Reference, ReferenceFunctionCall and ReferenceItem terms into a reference value
-            that represent an area of a workbook (ReferenceNode, StructuredReferenceNode) and operations over these areas (BinaryOperation, UnaryOperation, FunctionExpression).
-            </summary>
-        </member>
         <member name="T:ClosedXML.Excel.CalcEngine.FunctionDefinition">
             <summary>
             Function definition class (keeps function name, parameter counts, and delegate).
             </summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.FunctionDefinition._function">
-            <summary>
-            Only the <see cref="F:ClosedXML.Excel.CalcEngine.FunctionDefinition._function"/> or <see cref="F:ClosedXML.Excel.CalcEngine.FunctionDefinition._legacyFunction"/> is set.
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.FunctionDefinition._legacyFunction">
-            <summary>
-            Only the <see cref="F:ClosedXML.Excel.CalcEngine.FunctionDefinition._function"/> or <see cref="F:ClosedXML.Excel.CalcEngine.FunctionDefinition._legacyFunction"/> is set.
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.FunctionDefinition._markedParams">
-            <summary>
-            Which parameters of the function are marked. The values are indexes of the function parameters, starting from 0.
-            Used to determine which arguments allow ranges and which don't.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.FunctionFlags">
-            <summary>
-            Function flags that indicate what does function do. It is used by CalcEngine for calculation
-            chain and formula execution.
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.FunctionFlags.Scalar">
-            <summary>
-            Function that takes an input and returns an output. It is designed for a single value arguments.
-            If scalar function is used for array formula or dynamic array formula, the function is called for each element separately.
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.FunctionFlags.Range">
-            <summary>
-            Non-scalar function. At least one of arguments of the function accepts a range. It means that
-            implicit intersection works differently.
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.FunctionFlags.SideEffect">
-            <summary>
-            Function has side effects, e.g. it changes something.
-            </summary>
-            <example>HYPERLINK</example>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.AllowRange">
-            <summary>Which parameters of a function allow ranges. That is important for implicit intersection.</summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.AllowRange.None">
-            <summary>None of parameters allow ranges.</summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.AllowRange.All">
-            <summary>All parameters allow ranges.</summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.AllowRange.Except">
-            <summary>All parameters except marked ones allow ranges.</summary>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.AllowRange.Only">
-            <summary>Only marked parameters allow ranges.</summary>
         </member>
         <member name="M:ClosedXML.Excel.CalcEngine.Functions.DateAndTime.BusinessDaysUntil(System.DateTime,System.DateTime,System.Collections.Generic.IEnumerable{System.DateTime})">
             <summary>
@@ -688,11 +325,6 @@
             <param name="lastDay">Last day in the time interval</param>
             <param name="bankHolidays">List of bank holidays excluding weekends</param>
             <returns>Number of business days during the 'span'</returns>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.Functions.SignatureAdapter">
-            <summary>
-            A collection of adapter functions from a more a generic formula function to more specific ones.
-            </summary>
         </member>
         <member name="M:ClosedXML.Excel.CalcEngine.Text.TextJoin(System.Collections.Generic.List{ClosedXML.Excel.CalcEngine.Expression})">
             <summary>
@@ -706,85 +338,27 @@
             Second param must be a boolean (TRUE/FALSE)
             </exception>
         </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.Reference">
+        <member name="T:ClosedXML.Excel.CalcEngine.Token">
             <summary>
-            Reference is a collection of cells in the workbook. It's used in formula evaluation.
-            Every reference has at least one cell.
+            Represents a node in the expression tree.
             </summary>
         </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.Reference.#ctor(System.Collections.Generic.List{ClosedXML.Excel.XLRangeAddress})">
+        <member name="T:ClosedXML.Excel.CalcEngine.TKTYPE">
             <summary>
-            Ctor that reuses parameter to keep allocations low - don't modify the collection after it is passed to ctor.
+            Token types (used when building expressions, sequence defines operator priority)
             </summary>
         </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.Reference.Areas">
+        <member name="T:ClosedXML.Excel.CalcEngine.TKID">
             <summary>
-            List of areas of the range (at least one). All areas are valid and normalized. Some areas have worksheet and some don't.
+            Token ID (used when evaluating expressions)
             </summary>
         </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.Reference.GetCellsValues(ClosedXML.Excel.CalcEngine.CalcContext)">
+        <member name="M:ClosedXML.Excel.CalcEngine.XLCalcEngine.GetPrecedentRanges(System.String)">
             <summary>
-            An iterator over all nonblank cells of the range. Some cells can be iterated
-            over multiple times (e.g. a union of two ranges with overlapping cells).
+            Get a collection of cell ranges included into the expression. Order is not preserved.
             </summary>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.Reference.ImplicitIntersection(ClosedXML.Excel.IXLAddress)">
-            <summary>
-            Do an implicit intersection of an address.
-            </summary>
-            <param name="formulaAddress"></param>
-            <returns>An address of the intersection or error if intersection failed.</returns>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.ScalarValue">
-            <summary>
-            A representation of a value as a discriminated union.
-            </summary>
-            <remarks>
-            A bare bone copy of <c>OneOf</c> that can be more optimized:
-            <list type="bullet">
-              <item>readonly struct to get rid of defensive copies</item>
-              <item>struct can be smaller through offsets (based on NoBox)</item>
-              <item>allows to pass additional arguments to Match function to skip a need to instantiate a new lambda instance on each call and allow easier inlining.</item>
-            </list>
-            </remarks>
-        </member>
-        <member name="F:ClosedXML.Excel.CalcEngine.ScalarValue.Blank">
-            <summary>
-            A blank value of a scalar. It can behave as a 0 or empty string, depending on context.
-            </summary>
-            <example><c>A1+5</c> is a number 5, blank behaves as 0, <c>A1 &amp; "text"</c> is a "text", blank behaves as empty string.</example>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.ScalarValue.ToText(System.Globalization.CultureInfo)">
-            <summary>
-            Convert value to text. Error is not convertible.
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.ScalarValue.ToNumber(System.Globalization.CultureInfo)">
-            <summary>
-            Convert value to number. Error is not convertible.
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Excel.CalcEngine.XLCalcEngine.TryGetPrecedentCells(System.String,ClosedXML.Excel.XLWorksheet,System.Collections.Generic.ICollection{ClosedXML.Excel.XLCell}@)">
-            <summary>
-            Get cells that could be used as input of a formula, that could affect the calculated value.
-            </summary>
-            <remarks>Doesn't work for ranges determined by reference functions and reference operators, e.g. <c>A1:IF(SomeCondition,B1,C1)</c>.</remarks>
-            <param name="expression">Formula to analyze.</param>
-            <param name="worksheet">Worksheet used for ranges without sheet.</param>
-            <param name="uniqueCells">All cells (including newly created blank ones) that are referenced in the formula.</param>
-            <returns>.</returns>
-        </member>
-        <member name="P:ClosedXML.Excel.CalcEngine.XLCalcEngine.PrecedentAreasContext.HasReferenceErrors">
-            <summary>
-            Unable to determine all references, e.g. sheet doesn't exist.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.CalcEngine.XLCalcEngine.FormulaRangesVisitor">
-            <summary>
-            Get all ranges in the formula. Note that just because range
-            is in the formula, it doesn't mean it is actually used during evaluation.
-            Because named ranges can change, the result might change between visits.
-            </summary>
+            <param name="expression">Formula to parse.</param>
+            <returns>Collection of ranges included into the expression.</returns>
         </member>
         <member name="P:ClosedXML.Excel.IXLCell.Address">
             <summary>Gets this cell's address, relative to the worksheet.</summary>
@@ -1165,22 +739,6 @@
             </summary>
             <value>The formula with R1C1 references.</value>
         </member>
-        <member name="M:ClosedXML.Excel.XLCell.ConvertOtherSupportedTypes(System.Object)">
-            <summary>
-            This method converts a wider set up supported types to internal types
-            </summary>
-            <param name="value"></param>
-        </member>
-        <member name="M:ClosedXML.Excel.XLCell.TrySetInternallySupportedType``1(``0,ClosedXML.Excel.XLStyleValue,System.String@)">
-            <summary>
-            This method accepts only values of the supported internal types: String, DateTime, TimeSpan, Boolean and Numbers.
-            Any other types should be converted with <see cref="M:ClosedXML.Excel.XLCell.ConvertOtherSupportedTypes(System.Object)"/> first.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="value"></param>
-            <param name="style"></param>
-            <param name="internalValue"></param>
-        </member>
         <member name="P:ClosedXML.Excel.XLCell.IsEvaluating">
             <summary>
             Flag showing that the cell is in formula evaluation state.
@@ -1246,14 +804,13 @@
             Gets or sets the width of this column.
             </summary>
             <value>
-            The width of the column as multiple of maximum digit width (MDW). MDW is a maximum width of a 0-9 digit character.
+            The width of this column.
             </value>
         </member>
         <member name="M:ClosedXML.Excel.IXLColumn.Delete">
             <summary>
             Deletes this column and shifts the columns at the right of this one accordingly.
             </summary>
-            <remarks>Don't use in a loop due to poor performance. Use <see cref="M:ClosedXML.Excel.IXLRange.Delete(ClosedXML.Excel.XLShiftDeletedCells)"/> instead.</remarks>
         </member>
         <member name="M:ClosedXML.Excel.IXLColumn.ColumnNumber">
             <summary>
@@ -1559,17 +1116,6 @@
             Reorders the according to original priority. Done during load process
             </summary>
         </member>
-        <member name="T:ClosedXML.Excel.IXLAddress">
-            <summary>
-            Reference to a single cell in a workbook. Reference can be absolute, relative or mixed.
-            Reference can be with or without a worksheet.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.IXLAddress.Worksheet">
-            <summary>
-            Worksheet of the reference. Value is null for address without a worksheet.
-            </summary>
-        </member>
         <member name="M:ClosedXML.Excel.XLAddress.Create(System.String)">
             <summary>
             Create address without worksheet. For calculation only!
@@ -1752,26 +1298,6 @@
             <summary>
             Type of image. The supported formats are defined by OpenXML's ImagePartType.
             Default value is "jpeg"
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.Drawings.IXLPicture.Width">
-            <summary>
-            Current width of the picture in pixels.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.Drawings.IXLPicture.Height">
-            <summary>
-            Current height of the picture in pixels.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.Drawings.IXLPicture.OriginalHeight">
-            <summary>
-            Original height of the picture in pixels.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.Drawings.IXLPicture.OriginalWidth">
-            <summary>
-            Original width of the picture in pixels.
             </summary>
         </member>
         <member name="M:ClosedXML.Excel.Drawings.IXLPicture.CopyTo(ClosedXML.Excel.IXLWorksheet)">
@@ -2327,44 +1853,10 @@
             <param name="newSheetName"></param>
             <returns></returns>
         </member>
-        <member name="M:ClosedXML.Excel.IXLWorksheet.Evaluate(System.String,System.String)">
-            <summary>
-            Evaluate an formula and return a result.
-            </summary>
-            <param name="expression">Formula to evaluate.</param>
-            <param name="formulaAddress">A cell address that is used to provide context for formula calculation (mostly implicit intersection).</param>
-            <exception cref="T:ClosedXML.Excel.CalcEngine.Exceptions.MissingContextException">If <paramref name="formulaAddress"/> was needed for some part of calculation.</exception>
-        </member>
         <member name="M:ClosedXML.Excel.IXLWorksheet.RecalculateAllFormulas">
             <summary>
             Force recalculation of all cell formulas.
             </summary>
-        </member>
-        <member name="T:ClosedXML.Excel.LoadOptions">
-            <summary>
-            A class that defines various aspects of a newly created workbook.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.LoadOptions.DefaultGraphicEngine">
-            <summary>
-            A graphics engine that will be used for workbooks without explicitly set engine.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.LoadOptions.RecalculateAllFormulas">
-            <summary>
-            Should all formulas in a workbook be recalculated during load? Default value is <c>false</c>.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.LoadOptions.GraphicEngine">
-            <summary>
-            Graphic engine used by the workbook.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Excel.LoadOptions.Dpi">
-            <summary>
-            DPI for the workbook. Default is 96.
-            </summary>
-            <remarks>Used in various places, e.g. determining a physical size of an image without a DPI or to determine a size of a text in a cell.</remarks>
         </member>
         <member name="P:ClosedXML.Excel.IXLNamedRange.Comment">
             <summary>
@@ -3071,9 +2563,9 @@
             <param name="element">The element to remove</param>
             <returns>The current protection instance</returns>
         </member>
-        <member name="M:ClosedXML.Excel.IXLElementProtection`1.Protect(ClosedXML.Excel.XLProtectionAlgorithm.Algorithm)">
+        <member name="M:ClosedXML.Excel.IXLElementProtection`1.Protect">
             <summary>Protects this instance without a password.</summary>
-            <param name="algorithm">The algorithm.</param>
+            <returns></returns>
         </member>
         <member name="M:ClosedXML.Excel.IXLElementProtection`1.Protect(System.String,ClosedXML.Excel.XLProtectionAlgorithm.Algorithm)">
             <summary>Protects this instance using the specified password and password hash algorithm.</summary>
@@ -3106,17 +2598,8 @@
               <c>true</c> if this instance is protected; otherwise, <c>false</c>.
             </value>
         </member>
-        <member name="M:ClosedXML.Excel.IXLProtectable`2.Protect(`1)">
+        <member name="M:ClosedXML.Excel.IXLProtectable`2.Protect">
             <summary>Protects this instance without a password.</summary>
-        </member>
-        <member name="M:ClosedXML.Excel.IXLProtectable`2.Protect(ClosedXML.Excel.XLProtectionAlgorithm.Algorithm)">
-            <summary>Protects this instance without a password.</summary>
-            <returns></returns>
-        </member>
-        <member name="M:ClosedXML.Excel.IXLProtectable`2.Protect(ClosedXML.Excel.XLProtectionAlgorithm.Algorithm,`1)">
-            <summary>Protects this instance with the specified password, password hash algorithm and set elements that the user is allowed to change.</summary>
-            <param name="algorithm">The algorithm.</param>
-            <param name="allowedElements">The allowed elements.</param>
             <returns></returns>
         </member>
         <member name="M:ClosedXML.Excel.IXLProtectable`2.Protect(System.String,ClosedXML.Excel.XLProtectionAlgorithm.Algorithm)">
@@ -3153,7 +2636,7 @@
               <c>true</c> if this instance is protected; otherwise, <c>false</c>.
             </value>
         </member>
-        <member name="M:ClosedXML.Excel.IXLProtectable.Protect(ClosedXML.Excel.XLProtectionAlgorithm.Algorithm)">
+        <member name="M:ClosedXML.Excel.IXLProtectable.Protect">
             <summary>Protects this instance without a password.</summary>
             <returns></returns>
         </member>
@@ -4326,7 +3809,7 @@
             Gets or sets the height of this row.
             </summary>
             <value>
-            The width of this row in points.
+            The width of this row.
             </value>
         </member>
         <member name="M:ClosedXML.Excel.IXLRow.ClearHeight">
@@ -4338,7 +3821,6 @@
             <summary>
             Deletes this row and shifts the rows below this one accordingly.
             </summary>
-            <remarks>Don't use in a loop due to poor performance. Use <see cref="M:ClosedXML.Excel.IXLRange.Delete(ClosedXML.Excel.XLShiftDeletedCells)"/> instead.</remarks>
         </member>
         <member name="M:ClosedXML.Excel.IXLRow.RowNumber">
             <summary>
@@ -5671,16 +5153,6 @@
             Force recalculation of all cell formulas.
             </summary>
         </member>
-        <member name="M:ClosedXML.Excel.XLWorkbook.EvaluateExpr(System.String)">
-            <summary>
-            Evaluate a formula and return a value. Formulas with references don't work and culture used for conversion is invariant.
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Excel.XLWorkbook.ExtractVmlSimpleColor(System.String)">
-            <summary>
-            Parse VML ST_ColorType type from ECMA-376, Part 4 §20.1.2.3.
-            </summary>
-        </member>
         <member name="M:ClosedXML.Excel.XLWorkbook.ParseCellValue(DocumentFormat.OpenXml.Spreadsheet.RstType,ClosedXML.Excel.XLCell)">
             <summary>
             Parses the cell value for normal or rich text
@@ -5730,11 +5202,6 @@
             <param name="ro">Row number</param>
             <param name="co">Column number</param>
             <returns>Current value of the specified cell. Empty string for non-initialized cells.</returns>
-        </member>
-        <member name="M:ClosedXML.Excel.XLWorksheet.GetCell(System.Int32,System.Int32)">
-            <summary>
-            Get cell or null, if cell doesn't exist.
-            </summary>
         </member>
         <member name="M:ClosedXML.Excel.XLWorksheet.RangeRow(ClosedXML.Excel.XLRangeAddress,ClosedXML.Excel.IXLStyle)">
             <summary>
@@ -5812,147 +5279,6 @@
              <exception cref="T:System.ArgumentException">
              </exception>
             
-        </member>
-        <member name="T:ClosedXML.Graphics.BmpInfoReader">
-            <summary>
-            A reader for BMP for Windows and OS/2.
-            Specification:
-            https://www.fileformat.info/format/bmp/corion.htm
-            https://www.fileformat.info/format/bmp/egff.htm
-            https://www.fileformat.info/format/os2bmp/egff.htm
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Graphics.DefaultGraphicEngine._fonts">
-            <summary>
-            A font loaded font in the size <see cref="F:ClosedXML.Graphics.DefaultGraphicEngine.FontMetricSize"/>. There is no benefit in having multiple allocated instances, everything is just scaled at the moment.
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Graphics.DefaultGraphicEngine._maxDigitWidths">
-            <summary>
-            Max digit width as a fraction of Em square. Multiply by font size to get pt size.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Graphics.DefaultGraphicEngine.Instance">
-            <summary>
-            Get a singleton instance of the engine that uses <c>Microsoft Sans Serif</c> as a fallback font.
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Graphics.DefaultGraphicEngine.#ctor(System.String)">
-            <summary>
-            Initialize a new instance of the engine.
-            </summary>
-            <param name="fallbackFont">A name of a font that is used when a font in a workbook is not available.</param>
-        </member>
-        <member name="T:ClosedXML.Graphics.EmfInfoReader">
-            <summary>
-            Metadata read of a vector EMF file. Specification: https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-emf/
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Graphics.GifInfoReader">
-            <summary>
-            Read info about a GIF file. Gif file has no DPI, only pixel ratio.
-            Specification: https://www.w3.org/Graphics/GIF/spec-gif89a.txt
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Graphics.IXLGraphicEngine">
-            <summary>
-            An interface to abstract away graphical functionality, like reading images, fonts or to determine a width of a text.
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Graphics.IXLGraphicEngine.GetPictureInfo(System.IO.Stream,ClosedXML.Excel.Drawings.XLPictureFormat)">
-            <summary>
-            Get the info about a picture (mostly dimensions).
-            </summary>
-            <param name="imageStream">Stream is at the beginning of the image.</param>
-            <param name="expectedFormat">The expected format of the image. Use <see cref="F:ClosedXML.Excel.Drawings.XLPictureFormat.Unknown"/> for auto detection.</param>
-            <exception cref="T:System.ArgumentException">Unable to determine picture dimensions or format doesn't match the stream.</exception>
-        </member>
-        <member name="M:ClosedXML.Graphics.IXLGraphicEngine.GetTextHeight(ClosedXML.Excel.IXLFontBase,System.Double)">
-            <summary>
-            Get the height of a text with the font in pixels. Should be <c>EMHeight+descent</c>.
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Graphics.IXLGraphicEngine.GetTextWidth(System.String,ClosedXML.Excel.IXLFontBase,System.Double)">
-            <summary>
-            Get the width of a text in pixels. Do not add any padding, there can be
-            multiple spans of a texts with different fonts in a line.
-            </summary>
-        </member>
-        <member name="M:ClosedXML.Graphics.IXLGraphicEngine.GetMaxDigitWidth(ClosedXML.Excel.IXLFontBase,System.Double)">
-            <summary>
-            The width of the widest 0-9 digit in pixels.
-            </summary>
-            <remarks>OOXML measures width of a column in multiples of widest 0-9 digit character in a normal style font.</remarks>
-        </member>
-        <member name="M:ClosedXML.Graphics.IXLGraphicEngine.GetDescent(ClosedXML.Excel.IXLFontBase,System.Double)">
-            <summary>
-            Get font descent in pixels (positive value).
-            </summary>
-            <remarks>Excel is using OS/2 WinAscent/WinDescent for TrueType fonts (e.g. Calibri), not a correct font ascent/descent.</remarks>
-        </member>
-        <member name="T:ClosedXML.Graphics.JpegInfoReader">
-            <summary>
-            Read <a href="https://www.w3.org/Graphics/JPEG/jfif3.pdf">JFIF</a> or EXIF.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Graphics.PcxInfoReader">
-            <summary>
-            Read info about PCX picture.
-            https://moddingwiki.shikadi.net/wiki/PCX_Format
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Graphics.TiffInfoReader">
-            <summary>
-            A reader for baseline TIFF.
-            Specification: https://www.itu.int/itudoc/itu-t/com16/tiff-fx/docs/tiff6.pdf
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Graphics.TiffInfoReader.ByteOrder.LittleEndian">
-            <summary>
-            <c>II</c> like Intel in ASCII.
-            </summary>
-        </member>
-        <member name="F:ClosedXML.Graphics.TiffInfoReader.ByteOrder.BigEndian">
-            <summary>
-            <c>MM</c> like Motorola in ASCII.
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Graphics.WmfInfoReader">
-            <summary>
-            Reader of Windows Meta File.
-            https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-wmf/4813e7fd-52d0-4f42-965f-228c8b7488d2
-            http://formats.kaitai.io/wmf/index.html
-            </summary>
-        </member>
-        <member name="T:ClosedXML.Graphics.XLPictureInfo">
-            <summary>
-            Metadata info about a picture. At least one of the sizes (pixels/physical) must be set.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Graphics.XLPictureInfo.Format">
-            <summary>
-            Detected format of the image.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Graphics.XLPictureInfo.SizePx">
-            <summary>
-            Size of the picture in pixels.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Graphics.XLPictureInfo.SizePhys">
-            <summary>
-            A physical size in 0.01mm. Used by vector images.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Graphics.XLPictureInfo.DpiX">
-            <summary>
-            0 = use workbook DPI.
-            </summary>
-        </member>
-        <member name="P:ClosedXML.Graphics.XLPictureInfo.DpiY">
-            <summary>
-            0 = use workbook DPI.
-            </summary>
         </member>
         <member name="M:ClosedXML.Utils.OpenXmlHelper.FromClosedXMLColor``1(DocumentFormat.OpenXml.Spreadsheet.ColorType,ClosedXML.Excel.XLColor,System.Boolean)">
             <summary>

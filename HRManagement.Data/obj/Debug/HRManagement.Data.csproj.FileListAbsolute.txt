@@ -17,3 +17,4 @@ C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRMan
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.pdb
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.csproj.AssemblyReference.cache
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.Migrations.modelx1.resources
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.Migrations.updatedModel.resources

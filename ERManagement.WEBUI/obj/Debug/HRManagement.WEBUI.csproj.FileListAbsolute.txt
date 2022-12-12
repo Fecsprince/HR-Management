@@ -86,9 +86,6 @@ C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Unity.Cont
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Unity.Mvc.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\WebActivatorEx.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\WebGrease.dll
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Memory.dll
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Numerics.Vectors.dll
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Buffers.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\HRManagement.Data.pdb
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\HRManagement.Data.dll.config
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\HRManagement.Services.pdb
@@ -131,3 +128,6 @@ C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRMa
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.CopyComplete
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.pdb
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\DocumentFormat.OpenXml.dll
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\ClosedXML.pdb
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\DocumentFormat.OpenXml.xml
