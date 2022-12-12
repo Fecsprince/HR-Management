@@ -13,7 +13,7 @@ namespace ERManagement.WEBUI.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202212090715193_initial"; }
+            get { return "202212101437000_initial"; }
         }
         
         string IMigrationMetadata.Source

@@ -1,7 +1,3 @@
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.AssemblyReference.cache
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.CoreCompileInputs.cache
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.dll
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.pdb
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\ERManagement.WEBUI.dll.config
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\ERManagement.WEBUI.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\ERManagement.WEBUI.pdb
@@ -55,6 +51,7 @@ C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\roslyn\vbc
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\roslyn\VBCSCompiler.exe
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Antlr3.Runtime.dll
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\ClosedXML.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\EntityFramework.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\EntityFramework.SqlServer.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\HRManagement.Data.dll
@@ -89,10 +86,14 @@ C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Unity.Cont
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Unity.Mvc.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\WebActivatorEx.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\WebGrease.dll
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Memory.dll
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Numerics.Vectors.dll
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Buffers.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\HRManagement.Data.pdb
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\HRManagement.Data.dll.config
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\HRManagement.Services.pdb
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\HRManagement.Services.dll.config
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\ClosedXML.xml
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Threading.Tasks.Extensions.xml
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Web.Helpers.xml
@@ -123,11 +124,10 @@ C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Microsoft.
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.CopyComplete
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\ClosedXML.dll
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Memory.dll
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Numerics.Vectors.dll
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\System.Buffers.dll
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\ClosedXML.xml
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.AssemblyReference.cache
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.Migrations.initial.resources
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.GenerateResource.cache
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.CoreCompileInputs.cache
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.CopyComplete
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.dll
+C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.pdb

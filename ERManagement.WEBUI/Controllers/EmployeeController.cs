@@ -4,8 +4,6 @@ using HRManagement.WEBUI.Models;
 using HRManagement.Data.Models;
 using HRManagement.Data.Supports;
 using HRManagement.Services.Interfaces;
-using HRManagement.Services.Tools;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
@@ -15,6 +13,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Globalization;
+using ERManagement.WEBUI.Models;
 
 namespace SylistStore.WebUI.Controllers
 {
@@ -25,168 +25,324 @@ namespace SylistStore.WebUI.Controllers
         readonly IRepository<Employee> empContext;
         readonly IRepository<Designation> desContext;
         readonly IRepository<Branch> braContext;
-        readonly private ApplicationDbContext con;
+        readonly private ApplicationDbContext con = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        public EmployeeController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
 
         public EmployeeController(IRepository<Employee> employeeContext,
                                     IRepository<Designation> designationContext,
-                                        IRepository<Branch> branchContext,
-                                            ApplicationUserManager userManager,
-                                                 ApplicationSignInManager signInManager)
+                                        IRepository<Branch> branchContext)
         {
             empContext = employeeContext;
             desContext = designationContext;
             braContext = branchContext;
-            con = new ApplicationDbContext();
-            _userManager = userManager;
-            _signInManager = signInManager;
-
-
         }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+
 
         #region EMPLOYEE CRUD
 
         [HttpGet]
-        public ActionResult Index(string branch = null)
+        public ActionResult Index(string SCBranch = "", string SCDesignation = "")
         {
             try
             {
-                IEnumerable<Employee> employees = new List<Employee>();
-                if (branch != null)
+                if (Session["grmsg"] != null)
                 {
-                    employees = empContext.Collection().
-                        Where(x => x.Branch.Name == branch).
-                        OrderBy(x => x.Name).
-                        ToList();
+                    ViewBag.msg = Session["grmsg"].ToString();
                 }
-                else
-                    employees = empContext.Collection().
-                        OrderBy(x => x.Name);
 
-                if (employees != null && employees.Count() > 0)
+                IEnumerable<Employee> employees = empContext.Collection();
+
+                if (employees.Count() > 0)
                 {
-                    ViewBag.AllEmployees = employees;
+                    if (SCBranch != "" && SCDesignation != "")
+                        employees.Where(x => x.Branch.Name == SCBranch &&
+                                  x.Designation.Name == SCDesignation).
+                                  OrderBy(x => x.Name);
+
+                    else if (SCBranch != "")
+                        employees.Where(x => x.Branch.Name == SCBranch).
+                                   OrderBy(x => x.Name);
+                    else if (SCDesignation != "")
+                        employees.Where(x => x.Designation.Name == SCDesignation).
+                                  OrderBy(x => x.Name);
+                    else
+                        employees = employees.
+                            OrderBy(x => x.Name);
+
+
+                    ViewBag.CurrencyFmt = CultureInfo.CreateSpecificCulture("NG-NG");
+                    ViewBag.AllEmployees = employees.ToList();
                     ViewBag.EmployeesCount = employees.Count();
                 }
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null)
-                    ViewBag.msg = Session["csmsg"].ToString() + " " + ex.InnerException.Message.ToString();
+                if (ex.InnerException == null)
+                    ViewBag.msg = ex.Message.ToString();
                 else
-                    ViewBag.msg = Session["csmsg"].ToString() + " " + ex.Message.ToString();
-
-                return View();
+                    ViewBag.msg = ex.InnerException.Message.ToString();
             }
+
+            List<SearchBranchViewModel> searchBranches = new List<SearchBranchViewModel>();
+            List<SearchDesignationViewModel> searchDesignations = new List<SearchDesignationViewModel>();
+            var empBranches = braContext.Collection().Select(x => x.Name).ToList();
+            foreach (var br in empBranches)
+            {
+                searchBranches.Add(new SearchBranchViewModel()
+                {
+                    SBranch = br
+                });
+            }
+
+            var empDesignations = desContext.Collection().Select(x => x.Name).ToList();
+            foreach (var de in empDesignations)
+            {
+                searchDesignations.Add(new SearchDesignationViewModel()
+                {
+                    SDesignation = de
+                });
+            }
+
+            ViewBag.EmpBranches = searchBranches;
+            ViewBag.EmpDesignations = searchDesignations;
             return View();
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult Index(Employee model)
+        public async Task<JsonResult> Index(EmployeeViewModel model)
         {
             string msg = "";
 
-            if (ModelState.IsValid)
+
+            try
             {
+                var dbObj = empContext.Find(model.Id);
 
-                var dbObj = empContext.Find(model.Name);
-                try
+                if (dbObj != null)
                 {
-                    if (dbObj != null)
+                    dbObj.Name = model.Name;
+                    dbObj.DOB = model.DOB;
+
+                    dbObj.Email = model.Email;
+                    dbObj.Desgination_ID = model.Desgination_ID;
+                    dbObj.JobUnit_Branch_ID = model.JobUnit_Branch_ID;
+
+                    dbObj.DOE = model.DOE;
+
+                    dbObj.BasicSalary = model.BasicSalary;
+                    dbObj.HousingAllowance = model.HousingAllowance;
+                    dbObj.TransportAllowance = model.TransportAllowance;
+                    dbObj.UtilityAllowance = model.UtilityAllowance;
+                    dbObj.Pension = model.Pension;
+
+                    dbObj.GrossSalary = model.BasicSalary +
+                                        model.HousingAllowance +
+                                        model.TransportAllowance +
+                                        model.Pension;
+
+                    double tax = (model.Tax / 100) * Convert.ToDouble(model.BasicSalary);
+                    dbObj.Tax = model.Tax;
+
+                    dbObj.NetSalary = dbObj.GrossSalary - Convert.ToDecimal(tax);
+
+
+                    var updatedEmployee = empContext.Update(dbObj);
+                    if (updatedEmployee != null)
                     {
-                        dbObj.Name = model.Name;
-                        dbObj.DOB = model.DOB;
+                        msg = model.Name.ToString() + " record is updated successfully!";
+                    }
+                    else
+                    {
+                        msg = model.Name.ToString() + " record update FAILED!";
+                    }
+                }
+                else
+                {
+                    var emp = new Employee()
+                    {
+                        Name = model.Name,
+                        DOB = model.DOB,
+                        DOE = model.DOE,
+                        Email = model.Email,
+                        Gender = model.Gender,
+                        User_ID = model.User_ID,
+                        Desgination_ID = model.Desgination_ID,
+                        JobUnit_Branch_ID = model.JobUnit_Branch_ID,
+                        BasicSalary = model.BasicSalary,
+                        HousingAllowance = model.HousingAllowance,
+                        TransportAllowance = model.TransportAllowance,
+                        UtilityAllowance = model.UtilityAllowance,
+                        Pension = model.Pension
+                    };
 
-                        dbObj.Email = model.Email;
-                        dbObj.Desgination_ID = model.Desgination_ID;
-                        dbObj.JobUnit_Branch_ID = model.JobUnit_Branch_ID;
+                    emp.GrossSalary = model.BasicSalary +
+                                      model.HousingAllowance +
+                                      model.TransportAllowance +
+                                      model.Pension;
 
-                        dbObj.DOE = model.DOE;
+                    double tax = (model.Tax / 100) * Convert.ToDouble(model.BasicSalary);
+                    dbObj.Tax = model.Tax;
 
-                        dbObj.BasicSalary = model.BasicSalary;
-                        dbObj.HousingAllowance = model.HousingAllowance;
-                        dbObj.TransportAllowance = model.TransportAllowance;
-                        dbObj.UtilityAllowance = model.UtilityAllowance;
-                        dbObj.GrossSalary = model.GrossSalary;
-                        dbObj.NetSalary = model.NetSalary;
-                        dbObj.Tax = model.Tax;
-                        dbObj.Pension = model.Pension;
+                    emp.NetSalary = emp.GrossSalary - Convert.ToDecimal(tax);
+
+                    //CREATE USER ACCOUNT FIRST
+                    UploadResponseViewModel response = new UploadResponseViewModel();
+                    //CALL METHOD
+
+                    if (ModelState.IsValid)
+                    {
+
+                    }
 
 
+                    var userAccountResponse = await RegisterUser(emp);
+                    if (userAccountResponse != null &&
+                                           userAccountResponse.UserId != "" &&
+                                           userAccountResponse.UserId != null)
+                    {
+                        emp.User_ID = userAccountResponse.UserId;
 
-                        var updatedEmployee = empContext.Update(dbObj);
-                        if (updatedEmployee != null)
+                        response.Message = userAccountResponse.Message;
+                    }
+                    else
+                        response.Message = userAccountResponse.Message;
+
+                    if (ModelState.IsValid)
+                    {
+                        var newEmployee = empContext.Insert(emp);
+
+                        if (newEmployee != null)
                         {
-                            msg = model.Name.ToString() + " is updated successfully!";
+                            msg = newEmployee.Name + " record added Successfully!";
                         }
                         else
                         {
-                            msg = model.Name.ToString() + " update FAILED!";
+                            msg = newEmployee.Name + " record was not added successfully!";
                         }
                     }
                     else
                     {
-
-                        var newEmployee = empContext.Insert(model);
-
-                        if (newEmployee != null)
-                        {
-                            msg = newEmployee.Name + " added Successfully!";
-                        }
-                        else
-                        {
-                            msg = newEmployee.Name + " was not added successfully!";
-                        }
-
+                        msg = "PLEASE MAKE SURE YOUR ENTRIES ARE IN CORRECT FORMAT!\n" +
+                               response.Message;
                     }
-                }
-                catch (Exception ex)
-                {
-                    if (ex.InnerException.Message != null)
-                    {
-                        msg = "TRY AGAIN, IF PERSISTED, CONTACT ADMIN! \n" + ex.Message.ToString() + "\n" +
-                            ex.InnerException.Message.ToString();
-                    }
-                    msg = "TRY AGAIN, IF PERSISTED, CONTACT ADMIN! \n" + ex.Message.ToString();
                 }
             }
-            else
+            catch (Exception ex)
             {
-                msg = "PLEASE MAKE SURE YOUR ENTRIES ARE IN CORRECT FORMAT!";
+                if (ex.InnerException.Message == null)
+                {
+                    msg = "TRY AGAIN, IF PERSISTED, CONTACT ADMIN! \n" + ex.Message.ToString();
+
+                }
+                msg = "TRY AGAIN, IF PERSISTED, CONTACT ADMIN! \n" + ex.Message.ToString() + "\n" +
+                        ex.InnerException.Message.ToString();
             }
+
             return Json(msg, JsonRequestBehavior.AllowGet);
         }
 
 
         public ActionResult AddEditEmployee(string ID)
         {
-            Employee model = new Employee();
+
             try
             {
-                if (ID != null)
+
+                List<SearchBranchViewModel> searchBranches = new List<SearchBranchViewModel>();
+                List<SearchDesignationViewModel> searchDesignations = new List<SearchDesignationViewModel>();
+                var empBranches = braContext.Collection().ToList();
+                foreach (var br in empBranches)
+                {
+                    searchBranches.Add(new SearchBranchViewModel()
+                    {
+                        SBranch = br.Name,
+                        SBranchID = br.Id
+                    });
+                }
+
+                var empDesignations = desContext.Collection().ToList();
+                foreach (var de in empDesignations)
+                {
+                    searchDesignations.Add(new SearchDesignationViewModel()
+                    {
+                        SDesignation = de.Name,
+                        SDesignationID = de.Id
+                    });
+                }
+
+                var genderList = new GenderTools();
+
+                ViewBag.EmpBranches = searchBranches;
+                ViewBag.EmpDesignations = searchDesignations;
+                ViewBag.GenderList = genderList.GenderList().ToList();
+
+
+                if (ID != "")
                 {
                     var obj = empContext.Find(ID);
                     if (obj != null)
                     {
-                        model.Name = obj.Name;
-                        model.DOB = obj.DOB;
-                        model.DOE = obj.DOE;
-                        model.Email = obj.Email;
-                        model.Desgination_ID = obj.Desgination_ID;
-                        model.JobUnit_Branch_ID = obj.JobUnit_Branch_ID;
-                        model.BasicSalary = obj.BasicSalary;
-                        model.HousingAllowance = obj.HousingAllowance;
-                        model.TransportAllowance = obj.TransportAllowance;
-                        model.UtilityAllowance = obj.UtilityAllowance;
-                        model.GrossSalary = obj.GrossSalary;
-                        model.NetSalary = obj.NetSalary;
-                        model.Tax = obj.Tax;
-                        model.Pension = obj.Pension;
+                        var model = new EmployeeViewModel()
+                        {
+                            Name = obj.Name,
+                            DOB = obj.DOB,
+                            DOE = obj.DOE,
+                            Id = obj.Id,
+                            Email = obj.Email,
+                            Gender = obj.Gender,
+                            User_ID = obj.User_ID,
+                            Desgination_ID = obj.Desgination_ID,
+                            JobUnit_Branch_ID = obj.JobUnit_Branch_ID,
+                            BasicSalary = obj.BasicSalary,
+                            HousingAllowance = obj.HousingAllowance,
+                            TransportAllowance = obj.TransportAllowance,
+                            UtilityAllowance = obj.UtilityAllowance,
+                            GrossSalary = obj.GrossSalary,
+                            NetSalary = obj.NetSalary,
+                            Tax = obj.Tax,
+                            Pension = obj.Pension
+                        };
+                        return PartialView("AddEditEmployee", model);
                     }
+                    return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+                }
+                else
+                {
+                    return PartialView("AddEditEmployee");
                 }
             }
             catch (Exception ex)
@@ -194,28 +350,6 @@ namespace SylistStore.WebUI.Controllers
                 Session["grmsg"] = "TRY AGAIN, IF PERSISTED, CONTACT ADMIN!";
                 return RedirectToAction("Index");
             }
-            return PartialView("AddEditEmployee", model);
-        }
-
-        public ActionResult Employee(string empId = null)
-        {
-            if (empId == null)
-            {
-                 return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
-            }
-            else
-            {
-               var returnedEmp = empContext.Find(empId);
-                if (returnedEmp == null)
-                {
-                    HttpNotFound();
-                }
-                else
-                {
-                    return View(returnedEmp);
-                }
-            }
-            return View();
         }
 
         public JsonResult DeleteEmployee(string ID)
@@ -276,11 +410,9 @@ namespace SylistStore.WebUI.Controllers
                         System.IO.File.Delete(path);
                     excelfile.SaveAs(path);
 
-                    var uploadResponses = new List<UploadResponse>();
+                    var uploadResponses = new List<UploadResponseViewModel>();
 
-                    //XLWorkbook xLWorkbook = new XLWorkbook(path);
-
-                    List<Employee> employees = new List<Employee>();
+                    List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
                     List<String> emailList = new List<String>();
 
                     using (var xLWorkbook = new XLWorkbook(path))
@@ -288,9 +420,9 @@ namespace SylistStore.WebUI.Controllers
                         int startRow = 3;
                         while (xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 1).GetString() != "")
                         {
-                            Employee emp = new Employee(); //EMPLOYEE HOLDER
+                            EmployeeViewModel emp = new EmployeeViewModel(); //EMPLOYEE HOLDER
 
-                            UploadResponse upRes = new UploadResponse(); // RESPONSE TO ADMIN
+                            UploadResponseViewModel upRes = new UploadResponseViewModel(); // RESPONSE TO ADMIN
                             string branchName = null;
                             string designationName = null;
 
@@ -305,9 +437,16 @@ namespace SylistStore.WebUI.Controllers
                             emp.TransportAllowance = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 11).GetString());
                             emp.UtilityAllowance = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 12).GetString());
                             emp.Pension = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 13).GetString());
-                            emp.Tax = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 14).GetString());
-                            emp.GrossSalary = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 15).GetString());
-                            emp.NetSalary = Convert.ToDecimal(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 16).GetString());
+                            emp.Tax = Convert.ToDouble(xLWorkbook.Worksheets.Worksheet(1).Cell(startRow, 14).GetString());
+
+                            emp.GrossSalary = emp.BasicSalary +
+                                         emp.HousingAllowance +
+                                         emp.TransportAllowance +
+                                         emp.Pension;
+
+                            emp.Tax = (emp.Tax / 100) * (double)emp.BasicSalary;
+
+                            emp.NetSalary = emp.GrossSalary - Convert.ToDecimal(emp.Tax);
 
 
                             //  - ITERATE DESIGNATION AND BRANCH AND MATCH
@@ -352,39 +491,77 @@ namespace SylistStore.WebUI.Controllers
                     {
                         if (em != null)
                         {
+                            var emp = new Employee()
+                            {
+                                HousingAllowance = em.HousingAllowance,
+                                TransportAllowance = em.TransportAllowance,
+                                UtilityAllowance = em.UtilityAllowance,
+                                BasicSalary = em.BasicSalary,
+                                Pension = em.Pension,
+                                GrossSalary = em.GrossSalary,
+                                NetSalary = em.NetSalary,
+                                Tax = em.Tax,
+                                Email = em.Email,
+                                Name = em.Name,
+                                DOB = em.DOB,
+                                DOE = em.DOE,
+                                Gender = em.Gender,
+                                Desgination_ID = em.Desgination_ID,
+                                JobUnit_Branch_ID = em.JobUnit_Branch_ID
+                            };
                             string defaultPassword = Membership.GeneratePassword(10, 1);
 
                             //  -- CREATE USER ACCOUNT FIRST
-                            var user = new ApplicationUser { UserName = em.Email, Email = em.Email };
-                            var result = await _userManager.CreateAsync(user, defaultPassword);
+                            //CALL METHOD
+                            var userAccountResponse = await RegisterUser(emp);
 
-                            if (result.Succeeded)
+                            if (userAccountResponse != null &&
+                                                   userAccountResponse.UserId != "" &&
+                                                   userAccountResponse.UserId != null)
                             {
-                                //  -- ADD EMPLOYEE TO DB
-
-                                var savEmp = empContext.Insert(em);
-                                if (savEmp != null)
+                                emp.User_ID = userAccountResponse.UserId;
+                                uploadResponses.Add(new UploadResponseViewModel()
                                 {
-                                    uploadResponses.Add(new UploadResponse()
-                                    {
-                                        Message = em.Email + " employee record has been created successfully, " +
-                                                             "your defualt password is: " + defaultPassword
-                                    });
-
-                                }
-                                else
-                                {
-                                    uploadResponses.Add(new UploadResponse()
-                                    {
-                                        Message = em.Email + " employee record could not created successfully!"
-                                    });
-                                }
+                                    Message = userAccountResponse.Message
+                                });
                             }
                             else
-                                uploadResponses.Add(new UploadResponse()
+                                uploadResponses.Add(new UploadResponseViewModel()
                                 {
-                                    Message = em.Email + " user account could not created successfully!"
+                                    Message = userAccountResponse.Message
                                 });
+
+                            //var user = new ApplicationUser { UserName = em.Email, Email = em.Email };
+                            //var result = await _userManager.CreateAsync(user, defaultPassword);
+
+                            //if (result.Succeeded)
+                            //{
+                            //    //  -- ADD EMPLOYEE TO DB
+                            //    emp.User_ID = user.Id;
+
+                            //    var savEmp = empContext.Insert(emp);
+                            //    if (savEmp != null)
+                            //    {
+                            //        uploadResponses.Add(new UploadResponseViewModel()
+                            //        {
+                            //            Message = emp.Email + " employee record has been created successfully, " +
+                            //                                 "your defualt password is: " + defaultPassword
+                            //        });
+
+                            //    }
+                            //    else
+                            //    {
+                            //        uploadResponses.Add(new UploadResponseViewModel()
+                            //        {
+                            //            Message = emp.Email + " employee record could not created successfully!"
+                            //        });
+                            //    }
+                            //}
+                            //else
+                            //    uploadResponses.Add(new UploadResponseViewModel()
+                            //    {
+                            //        Message = emp.Email + " user account could not created successfully!"
+                            //    });
                         }
                     }
 
@@ -423,5 +600,53 @@ namespace SylistStore.WebUI.Controllers
 
 
         #endregion
+        [NonAction]
+        public async Task<UserAccountViewModel> RegisterUser(Employee emp)
+        {
+            string msg = "";
+            string uId = "";
+            string defaultPassword = Membership.GeneratePassword(10, 1);
+
+            //  -- CREATE USER ACCOUNT FIRST
+            var user = new ApplicationUser { UserName = emp.Email, Email = emp.Email };
+            var result = await UserManager.CreateAsync(user, defaultPassword);
+
+            if (result.Succeeded)
+            {
+                string id = emp.Id;
+
+                //  -- ADD EMPLOYEE TO DB
+                emp.Id = id;
+
+                emp.User_ID = user.Id;
+
+
+                var savEmp = empContext.Insert(emp);
+                if (savEmp != null)
+                {
+                    msg = emp.Email + " employee record has been created successfully, " +
+                                             "your defualt password is: " + "'<b>'" + defaultPassword + "'</b>'";
+                }
+                else
+                {
+                    msg = emp.Email + " employee record could not be created successfully!";
+                }
+
+
+            }
+            else
+                msg = emp.Email + " user account could not be created successfully!\n" +
+                                  result.Errors != null ? result.Errors.FirstOrDefault().ToString() : "";
+
+            return new UserAccountViewModel()
+            {
+                Message = msg,
+                UserId = uId
+            };
+        }
+
     }
+
+
+
 }

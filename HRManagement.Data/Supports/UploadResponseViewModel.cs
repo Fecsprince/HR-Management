@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HRManagement.Data.Supports
 {
-    public class UploadResponse
+    public class UploadResponseViewModel
     {
         public string Message { get; set; }
     }

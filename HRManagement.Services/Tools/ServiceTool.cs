@@ -12,7 +12,7 @@ namespace HRManagement.Services.Tools
     {
 
         //SEND MAIL TO EMPLOYEE
-        public string SendEmployeeMail(List<UploadResponse> uploadResponse,
+        public string SendEmployeeMail(List<UploadResponseViewModel> uploadResponse,
                                         List<String> emailList)
         {
             if (uploadResponse.Count > 0 && emailList.Count > 0)

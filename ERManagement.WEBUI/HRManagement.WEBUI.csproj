@@ -202,15 +202,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202212090715193_initial.cs" />
-    <Compile Include="Migrations\202212090715193_initial.Designer.cs">
-      <DependentUpon>202212090715193_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202212101437000_initial.cs" />
+    <Compile Include="Migrations\202212101437000_initial.Designer.cs">
+      <DependentUpon>202212101437000_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
+    <Compile Include="Models\UserAccountViewModel.cs" />
     <Compile Include="Models\UserRoleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -405,6 +406,8 @@
     <Content Include="Views\Branch\Index.cshtml" />
     <Content Include="Views\Designation\Index.cshtml" />
     <Content Include="Views\Designation\AddEditDesignation.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\Employee\AddEditEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -434,8 +437,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202212090715193_initial.resx">
-      <DependentUpon>202212090715193_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202212101437000_initial.resx">
+      <DependentUpon>202212101437000_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
