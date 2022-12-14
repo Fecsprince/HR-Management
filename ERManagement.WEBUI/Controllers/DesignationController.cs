@@ -82,16 +82,26 @@ namespace SylistStore.WebUI.Controllers
                             Name = model.Name,
                             Description = model.Description
                         };
-                        var newDesigation = context.Insert(designation);
 
-                        if (newDesigation != null)
+                        //CHECK THE EXISTENCE OF THE DESIGNATION
+                        var designations = context.Collection();
+
+                        var dbdesignation = designations.Where(x => x.Name == model.Name).FirstOrDefault();
+                        if (dbdesignation == null)
                         {
-                            msg = newDesigation.Name + " added Successfully!";
+                            var newDesigation = context.Insert(designation);
+
+                            if (newDesigation != null)
+                            {
+                                msg = newDesigation.Name + " added Successfully!";
+                            }
+                            else
+                            {
+                                msg = newDesigation.Name + " was not added successfully!";
+                            }
                         }
                         else
-                        {
-                            msg = newDesigation.Name + " was not added successfully!";
-                        }
+                            msg = model.Name + " is already found in the database!";
 
                     }
                 }

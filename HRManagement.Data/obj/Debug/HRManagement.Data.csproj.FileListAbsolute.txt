@@ -9,12 +9,8 @@ C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\Entit
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.Migrations.initial.resources
-C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.csproj.GenerateResource.cache
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.csproj.CoreCompileInputs.cache
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.csproj.CopyComplete
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.dll
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.pdb
 C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.csproj.AssemblyReference.cache
-C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.Migrations.modelx1.resources
-C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.Migrations.updatedModel.resources

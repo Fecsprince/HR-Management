@@ -122,8 +122,6 @@ C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Microsoft.
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.AssemblyReference.cache
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.Migrations.initial.resources
-C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.GenerateResource.cache
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.CoreCompileInputs.cache
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\HRManagement.WEBUI.csproj.CopyComplete
 C:\Users\FECSPRINCE\source\repos\HR Management\ERManagement.WEBUI\obj\Debug\ERManagement.WEBUI.dll

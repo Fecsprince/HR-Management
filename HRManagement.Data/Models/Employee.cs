@@ -22,6 +22,9 @@ namespace HRManagement.Data.Models
         [DataType(DataType.Date)]
         public DateTime DOB { get; set; }
 
+        public byte[] Passport { get; set; }
+
+
         [Required(ErrorMessage = "Designation is missing")]
         [ForeignKey("Designation")]
         public string Desgination_ID { get; set; }

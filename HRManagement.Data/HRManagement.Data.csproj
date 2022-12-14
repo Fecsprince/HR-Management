@@ -47,6 +47,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,25 +57,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
-    <Compile Include="Migrations\202212101438404_initial.cs" />
-    <Compile Include="Migrations\202212101438404_initial.Designer.cs">
-      <DependentUpon>202212101438404_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202212121139051_modelx1.cs" />
-    <Compile Include="Migrations\202212121139051_modelx1.Designer.cs">
-      <DependentUpon>202212121139051_modelx1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202212122219526_updatedModel.cs" />
-    <Compile Include="Migrations\202212122219526_updatedModel.Designer.cs">
-      <DependentUpon>202212122219526_updatedModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\FeedBack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Supports\FinalContextSeeder.cs" />
     <Compile Include="Supports\DesignationViewModel.cs" />
     <Compile Include="Supports\BranchViewModel.cs" />
     <Compile Include="Supports\EmployeeViewModel.cs" />
@@ -83,22 +72,12 @@
     <Compile Include="Supports\SearchBranchViewModel.cs" />
     <Compile Include="Supports\SearchBranchDesignationViewModel.cs" />
     <Compile Include="Supports\GenderViewModel.cs" />
+    <Compile Include="Supports\UploadEmployeePassportViewModel.cs" />
     <Compile Include="Supports\UploadResponseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202212101438404_initial.resx">
-      <DependentUpon>202212101438404_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202212121139051_modelx1.resx">
-      <DependentUpon>202212121139051_modelx1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202212122219526_updatedModel.resx">
-      <DependentUpon>202212122219526_updatedModel.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

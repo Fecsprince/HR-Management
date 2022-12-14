@@ -83,17 +83,26 @@ namespace SylistStore.WebUI.Controllers
                             Name = model.Name,
                             Address = model.Address
                         };
-                        var newBranch = context.Insert(branch);
 
-                        if (newBranch != null)
+                        //CHECK THE EXISTENCE OF THE BRANCH
+                        var branches = context.Collection();
+
+                        var dbbranch = branches.Where(x => x.Name == branch.Name).FirstOrDefault();
+                        if (dbbranch == null)
                         {
-                            msg = newBranch.Name + " added Successfully!";
+                            var newBranch = context.Insert(branch);
+
+                            if (newBranch != null)
+                            {
+                                msg = newBranch.Name + " added Successfully!";
+                            }
+                            else
+                            {
+                                msg = newBranch.Name + " was not added successfully!";
+                            }
                         }
                         else
-                        {
-                            msg = newBranch.Name + " was not added successfully!";
-                        }
-
+                            msg = branch.Name + " is already found in the database!";
                     }
                 }
                 catch (Exception ex)

@@ -202,15 +202,11 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\BranchController.cs" />
+    <Compile Include="Controllers\UserEmployeeController.cs" />
     <Compile Include="Controllers\UtilityController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202212101437000_initial.cs" />
-    <Compile Include="Migrations\202212101437000_initial.Designer.cs">
-      <DependentUpon>202212101437000_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -219,6 +215,7 @@
     <Compile Include="Models\UserRoleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="InitialContextSeeder.cs" />
     <Compile Include="Utility\BinaryToImage.cs" />
     <Compile Include="Utility\GetDateHelper.cs" />
     <Compile Include="Utility\Utilities.cs" />
@@ -413,10 +410,13 @@
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Employee\AddEditEmployee.cshtml" />
     <Content Include="Views\Employee\UploadEmployee.cshtml" />
+    <Content Include="Views\UserEmployee\GetEmployee.cshtml" />
+    <Content Include="Views\UserEmployee\UploadPassport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Uploads\EmployeeDocument\" />
+    <Folder Include="Uploads\Passports\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -440,11 +440,6 @@
       <Project>{006ada6d-61d7-4bc0-b4ab-ea98fd0bd67f}</Project>
       <Name>HRManagement.Services</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202212101437000_initial.resx">
-      <DependentUpon>202212101437000_initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

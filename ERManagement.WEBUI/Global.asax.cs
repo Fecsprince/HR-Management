@@ -1,5 +1,7 @@
+using HRManagement.Data.Supports;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +18,10 @@ namespace HRManagement.WEBUI
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+
+            Database.SetInitializer(new InitialContextSeeder());
+            Database.SetInitializer(new FinalContextSeeder());
         }
     }
 }

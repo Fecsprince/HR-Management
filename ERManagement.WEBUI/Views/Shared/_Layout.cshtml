@@ -121,10 +121,8 @@
                                     Employee
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" href="@Url.Action("Index","Home")">My Profile</a></li>
-                                    <li><a class="dropdown-item" href="@Url.Action("UploadPicture","Home")">Upload Picture</a></li>
-                                    @*<li><a class="dropdown-item" href="@Url.Action("ITFRegister","ITF")">Branch IT Students</a></li>*@
-                                    <li>
+                                    <li><a class="dropdown-item" href="@Url.Action("GetEmployee","UserEmployee")">My Employee Details</a></li>
+                                  <li>
                                         <hr class="dropdown-header fw-bolder text-primary fw-bolder text-primary">
                                     </li>
                                     <li><a class="dropdown-item" href="#">Something else here</a></li>
@@ -153,7 +151,9 @@
 
                                     <li class="dropdown-header fw-bolder text-primary">Employees</li>
                                     <li><a class="dropdown-item" href="@Url.Action("Index","Employee")">Employess</a></li>
-                                    <li><a class="dropdown-item" href="@Url.Action("UploadEmployee","Employee")">Upload Employee</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("UploadEmployee","Employee")">Upload Employees</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("UploadPassport","UserEmployee")">Upload my Passport</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("GetEmployee","UserEmployee")">My Employee Details</a></li>
 
                                 </ul>
                             </li>
