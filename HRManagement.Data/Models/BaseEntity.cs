@@ -6,6 +6,7 @@ namespace HRManagement.Data.Models
    public abstract class BaseEntity
     {
         [Key]
+        [Required(ErrorMessage = "ID is missing")]
         public string Id { get; set; }
         [Display(Name = "Creaeted Date")]
         public DateTimeOffset CreatedAt { get; set; }

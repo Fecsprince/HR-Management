@@ -5,9 +5,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using ERManagement.WEBUI.Models;
+using HRManagement.WEBUI.Models;
 
-namespace ERManagement.WEBUI
+namespace HRManagement.WEBUI
 {
     public partial class Startup
     {

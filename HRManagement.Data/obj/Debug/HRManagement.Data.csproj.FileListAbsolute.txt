@@ -1,0 +1,16 @@
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\HRManagement.Data.dll.config
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\HRManagement.Data.dll
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\HRManagement.Data.pdb
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\EntityFramework.dll
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\EntityFramework.xml
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.csproj.CoreCompileInputs.cache
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.csproj.CopyComplete
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.dll
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.pdb
+C:\Users\FECSPRINCE\source\repos\HR Management\HRManagement.Data\obj\Debug\HRManagement.Data.csproj.AssemblyReference.cache

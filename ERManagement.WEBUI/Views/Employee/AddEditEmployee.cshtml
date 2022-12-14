@@ -1,0 +1,161 @@
+﻿
+
+@model HRManagement.Data.Supports.EmployeeViewModel
+
+
+
+
+<div class="row">
+    <div class="col">
+        <section class="ftco-section" style="padding-top:0px; padding-bottom: 2px;">
+            <div class="row justify-content-center">
+                <div class="login-wrap">
+                    <div class="img" style="background-image: url(/Images/company3.jpg);"></div>
+                    <h3 class="text-center mb-4">
+                        @if (Model != null)
+                        {<span>Update Employee</span>}
+                        else
+                        { <span>Add New Employee</span>}
+                    </h3>
+
+                    <form id="frmEmployee">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.User_ID)
+
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Employee Profile </h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group mb-3">
+                                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @placeholder = "Employee Name" })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "Employee Email-Addrss" })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    <p>Gender</p>
+                                    @Html.DropDownListFor(x => x.Gender, new SelectList(ViewBag.GenderList, "Gender", "Gender"), "Select Employee Gender", new { @class = "form-control" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    <p>Date of Birth</p>
+                                    @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    <p>Date of Employment</p>
+                                    @Html.EditorFor(model => model.DOE, new { htmlAttributes = new { @class = "form-control"} })
+                                    @Html.ValidationMessageFor(model => model.DOE, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    <p>Job Unit</p>
+                                    @Html.DropDownListFor(x => x.JobUnit_Branch_ID, new SelectList(ViewBag.EmpBranches, "SBranchID", "SBranch"), "Select Branch", new { @class = "form-control" })
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <p>Designation</p>
+                                    @Html.DropDownListFor(x => x.Desgination_ID, new SelectList(ViewBag.EmpDesignations, "SDesignationID", "SDesignation"), "Select Designation", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Employee Account Details </h3>
+                            </div>
+                            <div class="panel-body">
+
+                                <div class="form-group mb-3">
+                                    @Html.EditorFor(model => model.BasicSalary, new { htmlAttributes = new { @class = "form-control", placeholder = "Basic Salary: 0.00" } })
+                                    @Html.ValidationMessageFor(model => model.BasicSalary, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    @Html.EditorFor(model => model.Pension, new { htmlAttributes = new { @class = "form-control", placeholder = "Pension: 0.00" } })
+                                    @Html.ValidationMessageFor(model => model.Pension, "", new { @class = "text-danger" })
+                                </div>
+                                <b>Allowances</b>
+                                <br />
+                                <div class="form-group mb-3">
+                                    @Html.EditorFor(model => model.HousingAllowance, new { htmlAttributes = new { @class = "form-control", placeholder = "Housing Allowance: 0.00" } })
+                                    @Html.ValidationMessageFor(model => model.HousingAllowance, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    @Html.EditorFor(model => model.TransportAllowance, new { htmlAttributes = new { @class = "form-control", placeholder = "Transportation Allowance: 0.00" } })
+                                    @Html.ValidationMessageFor(model => model.TransportAllowance, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group mb-3">
+                                    @Html.EditorFor(model => model.UtilityAllowance, new { htmlAttributes = new { @class = "form-control", placeholder = "Utility Allowance: 0.00" } })
+                                    @Html.ValidationMessageFor(model => model.UtilityAllowance, "", new { @class = "text-danger" })
+                                </div>
+                                <b>Taxation</b>
+                                <div class="form-group mb-3">
+                                    @Html.EditorFor(model => model.Tax, new { htmlAttributes = new { @class = "form-control", placeholder = "Tax: 1.5" } })
+                                    @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div style="text-align: center;" id="loaderDiv11" class="pt-2">
+                            <img src="~/Images/loadingx.gif" width="80" height="80" class="img img-thumbnail" />
+                        </div>
+
+                        <div class="d-grid gap-2 col-md-12 mx-auto mt-2">
+                            <a href="#" class="btn btn-primary submit fw-bold px-3 fw-bolder" id="btnSaveUpdate">
+                                @if (Model != null)
+                                {<span>Update Employee</span>}
+                                else
+                                { <span>Save New Employee</span>}
+                            </a>
+                        </div>
+
+
+
+                    </form>
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+</div>
+
+
+
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#loaderDiv11").hide();
+
+        $("#btnSaveUpdate").click(function () {
+
+            $("#loaderDiv11").show();
+
+            var frmData = $("#frmEmployee").serialize();
+            var data = frmData;
+            debugger;
+
+            $.ajax({
+                type: "POST",
+                url: "/Employee/Index",
+                data: data,
+                success: function (result) {
+                    $("#loaderDiv11").hide();
+                    $("#AddEditModal").modal("hide"); //TO HIDE MODAL AFTER SAVING RECORD
+                    if (result.trim != "" || result.trim != null) { alert(result); }
+                    window.location.href = "/Employee/Index";
+                }
+            })
+        })
+
+    })
+</script>
+
+

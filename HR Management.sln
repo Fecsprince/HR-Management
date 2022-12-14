@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32802.440
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERManagement.WEBUI", "ERManagement.WEBUI\ERManagement.WEBUI.csproj", "{39C6B5B2-5154-4397-A0D6-97D87389C1B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRManagement.WEBUI", "ERManagement.WEBUI\HRManagement.WEBUI.csproj", "{39C6B5B2-5154-4397-A0D6-97D87389C1B0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRManagement.Data", "HRManagement.Data\HRManagement.Data.csproj", "{D5962AA4-09FE-4E02-9118-460F82D3FA37}"
 EndProject
