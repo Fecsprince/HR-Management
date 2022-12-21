@@ -36,10 +36,13 @@ namespace ERManagement.WEBUI.Controllers
 
                 if (emp != null)
                 {
-                    var base64 = Convert.ToBase64String(emp.Passport);
-                    var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                    if (emp.Passport != null)
+                    {
+                        var base64 = Convert.ToBase64String(emp.Passport);
+                        var imgSrc = String.Format("data:image/png;base64,{0}", base64);
+                        ViewBag.Cert = imgSrc;
+                    }
 
-                    ViewBag.Cert = imgSrc;
                     return View(emp);
                 }
                 else
@@ -136,7 +139,7 @@ namespace ERManagement.WEBUI.Controllers
                     return View();
                 }
                 else
-                {                   
+                {
                     TempData["Msg"] = "Please copy response and send to admin: \n" +
                                             ex.Message.ToString() + "\n" +
                                             ex.InnerException.Message.ToString();
@@ -146,6 +149,6 @@ namespace ERManagement.WEBUI.Controllers
             }
             return View();
         }
-               
+
     }
 }
