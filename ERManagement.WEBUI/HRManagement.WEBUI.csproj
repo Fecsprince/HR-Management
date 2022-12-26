@@ -412,6 +412,7 @@
     <Content Include="Views\Employee\UploadEmployee.cshtml" />
     <Content Include="Views\UserEmployee\GetEmployee.cshtml" />
     <Content Include="Views\UserEmployee\UploadPassport.cshtml" />
+    <Content Include="Views\Employee\EmployeeDefaultPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

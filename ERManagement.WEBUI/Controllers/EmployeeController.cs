@@ -27,6 +27,7 @@ namespace HRManagement.WebUI.Controllers
         readonly IRepository<Employee> empContext;
         readonly IRepository<Designation> desContext;
         readonly IRepository<Branch> braContext;
+        readonly IRepository<EmployeeDefaultPassword> empDefPassContext; 
         readonly private ApplicationDbContext con = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -39,11 +40,13 @@ namespace HRManagement.WebUI.Controllers
 
         public EmployeeController(IRepository<Employee> employeeContext,
                                     IRepository<Designation> designationContext,
-                                        IRepository<Branch> branchContext)
+                                        IRepository<Branch> branchContext,
+                                        IRepository<EmployeeDefaultPassword> _empDefPassContext)
         {
             empContext = employeeContext;
             desContext = designationContext;
             braContext = branchContext;
+            empDefPassContext = _empDefPassContext;
         }
 
         public ApplicationSignInManager SignInManager
@@ -209,7 +212,8 @@ namespace HRManagement.WebUI.Controllers
                         HousingAllowance = model.HousingAllowance,
                         TransportAllowance = model.TransportAllowance,
                         UtilityAllowance = model.UtilityAllowance,
-                        Pension = model.Pension
+                        Pension = model.Pension,
+                        Tax = model.Tax
                     };
 
                     emp.GrossSalary = model.BasicSalary +
@@ -219,7 +223,7 @@ namespace HRManagement.WebUI.Controllers
                                       model.Pension;
 
                     double tax = (model.Tax / 100) * Convert.ToDouble(model.BasicSalary);
-                    dbObj.Tax = model.Tax;
+                   
 
                     emp.NetSalary = emp.GrossSalary - Convert.ToDecimal(tax);
 
@@ -372,6 +376,14 @@ namespace HRManagement.WebUI.Controllers
         }
 
         #endregion
+
+        public ActionResult EmployeeDefaultPassword()
+        {
+            var empDepPass = empDefPassContext.Collection();
+            ViewBag.AllDefaultPasswords = empDepPass.ToList();
+            ViewBag.DefaultPasswordCount = empDepPass.Count();
+            return View();
+        }
 
         #region --  EMPLOYEE EXCEL RECORD UPLOAD
         public ActionResult UploadEmployee()
@@ -544,6 +556,7 @@ namespace HRManagement.WebUI.Controllers
                                 {
                                     Message = userAccountResponse.Message
                                 });
+                              
                             }
                             else
                                 uploadResponses.Add(new UploadResponseViewModel()
@@ -586,8 +599,8 @@ namespace HRManagement.WebUI.Controllers
             return RedirectToAction("UploadEmployee");
         }
 
-
         #endregion
+
         [NonAction]
         public async Task<UserAccountViewModel> RegisterUser(Employee emp)
         {
@@ -612,6 +625,16 @@ namespace HRManagement.WebUI.Controllers
                 if (savEmp != null)
                 {
                     string roleMsg = "";
+
+                    //CREATE EMPLOYEE_DEFAULT_PASSWORD
+                    var empDefPass = new EmployeeDefaultPassword()
+                    {
+                        Email = emp.Email,
+                        Password = defaultPassword
+                    };
+
+                    empDefPassContext.Insert(empDefPass);
+
                     var roles = con.Roles.Where(x => x.Name == "Employee").FirstOrDefault();
                     if (roles != null)
                     {

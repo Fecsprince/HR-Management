@@ -48,6 +48,7 @@ namespace HRManagement.WEBUI
             container.RegisterType<IRepository<Branch>, SQLRepository<Branch>>();
             container.RegisterType<IRepository<FeedBack>, SQLRepository<FeedBack>>();
             container.RegisterType<IRepository<Employee>, SQLRepository<Employee>>();
+            container.RegisterType<IRepository<EmployeeDefaultPassword>, SQLRepository<EmployeeDefaultPassword>>();
         }
     }
 }

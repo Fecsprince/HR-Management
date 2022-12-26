@@ -21,6 +21,7 @@ namespace HRManagement.Data
         public DbSet<Branch> Branches { get; set; } 
         public DbSet<FeedBack> FeedBacks { get; set; } 
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeeDefaultPassword> EmployeeDefaultPasswords  { get; set; }
 
 
 
